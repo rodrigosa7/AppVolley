@@ -5,7 +5,9 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import {create, createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import Auth from './screens/Auth';
+import Exercicio from './screens/coach/Exercicio';
 import Home from './screens/coach/Home';
+
 import CreateEvent from './screens/coach/CreateEvent';
 
 //import AuthOrApp from './screens/AuthOrApp';
@@ -21,7 +23,7 @@ const DrawerNavigator = () => {
     <Drawer.Navigator>
       <Drawer.Screen name="Home" component={Home} />
       <Drawer.Screen name="Criar Evento" component={CreateEvent} />
-      <Drawer.Screen name="Presenças" component={CreateEvent} />
+      <Drawer.Screen name="Exercicio" component={Exercicio} />
 
       {/* <Drawer.Screen name="Presenças" component={Presencas}/>
           <Drawer.Screen name="CheckList" component={Checklist}/> */}

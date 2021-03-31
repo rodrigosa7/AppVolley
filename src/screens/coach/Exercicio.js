@@ -3,6 +3,7 @@ import {Text, View, StyleSheet, FlatList, Button} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import axios from 'axios';
 import server from '../../common';
+import Exercice from '../../components/Exercice';
 
 export default (props) => {
   const [gesto, setGesto] = useState('');
@@ -10,14 +11,11 @@ export default (props) => {
 
   useEffect(() => {
     getExercicios();
-    console.warn('OLA');
-  }, []);
+  });
 
   getExercicios = async () => {
-    console.log(exercicios);
     try {
       const res = await axios.get(`http://10.0.2.2:3001/exercise`);
-      console.warn('ola' + res.data[0].descricao);
       setExercicios(res.data);
     } catch (e) {
       console.warn(e);
@@ -38,7 +36,11 @@ export default (props) => {
         <Text style={{fontSize: 20, marginTop: 20, marginLeft: 15}}>
           Lista de Exercicios
         </Text>
-        <FlatList></FlatList>
+        <FlatList
+          data={exercicios}
+          keyExtractor={(item) => `${item.idExercicio}`}
+          renderItem={({item}) => <Exercice {...item} />}
+        />
       </View>
       <Button title="Get exercicios" onPress={getExercicios}></Button>
     </View>

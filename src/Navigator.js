@@ -7,6 +7,7 @@ import {create, createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Auth from './screens/Auth';
 import Exercicio from './screens/coach/Exercicio';
 import Home from './screens/coach/Home';
+import ExerciceInfo from './screens/coach/ExerciceInfo';
 
 import CreateEvent from './screens/coach/CreateEvent';
 
@@ -24,7 +25,12 @@ const DrawerNavigator = () => {
       <Drawer.Screen name="Home" component={Home} />
       <Drawer.Screen name="Criar Evento" component={CreateEvent} />
       <Drawer.Screen name="Exercicio" component={Exercicio} />
-
+      {/* <Drawer.Screen
+        name="ExercicioInfo"
+        component={ExerciceInfo}
+        options={{drawerLabel: () => null, title: null, drawerIcon: null}}
+      />
+ */}
       {/* <Drawer.Screen name="Presenças" component={Presencas}/>
           <Drawer.Screen name="CheckList" component={Checklist}/> */}
     </Drawer.Navigator>
@@ -37,6 +43,7 @@ const AuthNavigator = () => {
       {/* <Stack.Screen name="AuthOrApp" component={AuthOrApp} /> */}
       <Stack.Screen name="Auth" component={Auth} />
       <Stack.Screen name="HomeCoach" component={DrawerNavigator} />
+      <Stack.Screen name="InfoExercicio" component={ExerciceInfo} />
     </Stack.Navigator>
   );
 };

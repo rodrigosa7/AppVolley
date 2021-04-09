@@ -1,11 +1,19 @@
 import React, {useState, useEffect} from 'react';
-import {Text, View, StyleSheet, FlatList, Button} from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  FlatList,
+  Button,
+  TouchableOpacity,
+} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import axios from 'axios';
 import server from '../../common';
 import Exercice from '../../components/Exercice';
+import ExerciceInfo from '../../screens/coach/ExerciceInfo';
 
-export default (props) => {
+export default ({props, navigation}) => {
   const [gesto, setGesto] = useState('');
   const [exercicios, setExercicios] = useState([]);
 
@@ -15,7 +23,9 @@ export default (props) => {
 
   getExercicios = async () => {
     try {
-      const res = await axios.get(`http://10.0.2.2:3001/exercise`);
+      const res = await axios.get(
+        `http://volleyapi.sarapaiva.webtuga.net/exercise`,
+      );
       setExercicios(res.data);
     } catch (e) {
       console.warn(e);
@@ -39,7 +49,12 @@ export default (props) => {
         <FlatList
           data={exercicios}
           keyExtractor={(item) => `${item.idExercicio}`}
-          renderItem={({item}) => <Exercice {...item} />}
+          renderItem={({item}) => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('InfoExercicio', {item})}>
+              <Exercice {...item} />
+            </TouchableOpacity>
+          )}
         />
       </View>
       <Button title="Get exercicios" onPress={getExercicios}></Button>

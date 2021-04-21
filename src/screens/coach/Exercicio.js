@@ -31,6 +31,9 @@ export default ({props, navigation}) => {
       console.warn(e);
     }
   };
+  addExercise = () => {
+    navigation.navigate('AddExercise');
+  };
 
   return (
     <View style={styles.container}>
@@ -58,6 +61,7 @@ export default ({props, navigation}) => {
         />
       </View>
       <Button title="Get exercicios" onPress={getExercicios}></Button>
+      <Button title="Add Exercise" onPress={addExercise}></Button>
     </View>
   );
 };

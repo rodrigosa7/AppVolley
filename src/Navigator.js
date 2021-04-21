@@ -8,6 +8,7 @@ import Auth from './screens/Auth';
 import Exercicio from './screens/coach/Exercicio';
 import Home from './screens/coach/Home';
 import ExerciceInfo from './screens/coach/ExerciceInfo';
+import AddExercise from './screens/coach/AddExercise';
 
 import CreateEvent from './screens/coach/CreateEvent';
 
@@ -44,6 +45,7 @@ const AuthNavigator = () => {
       <Stack.Screen name="Auth" component={Auth} />
       <Stack.Screen name="HomeCoach" component={DrawerNavigator} />
       <Stack.Screen name="InfoExercicio" component={ExerciceInfo} />
+      <Stack.Screen name="AddExercise" component={AddExercise} />
     </Stack.Navigator>
   );
 };

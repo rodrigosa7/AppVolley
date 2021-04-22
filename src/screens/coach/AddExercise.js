@@ -4,7 +4,7 @@ import {Picker} from '@react-native-picker/picker';
 import axios from 'axios';
 import ImagePicker from 'react-native-image-crop-picker';
 
-export default ({props, route}) => {
+export default ({props, route, navigation}) => {
   const [descricao, setDescricao] = useState('');
   const [nome, setNome] = useState('');
   const [gesto, setGesto] = useState('');
@@ -17,7 +17,9 @@ export default ({props, route}) => {
 
   getGestos = async () => {
     try {
-      const res = await axios.get(`http://10.0.2.2:3001/GestoTecnico`);
+      const res = await axios.get(
+        `http://volleyapi.sarapaiva.webtuga.net/GestoTecnico`,
+      );
       setGestos(res.data);
     } catch (e) {
       console.warn(e);
@@ -25,18 +27,11 @@ export default ({props, route}) => {
   };
 
   uploadExercise = () => {
-    console.warn('HELLO');
-    console.warn(nome);
-    console.warn(descricao);
-    console.warn(gesto);
-    console.warn(imagem);
-
     var formData = new FormData();
 
     formData.append('nome', nome);
     formData.append('desc', descricao);
     formData.append('gesto', gesto);
-    //formData.append('foto', imagemsend);
 
     formData.append('foto', {
       name: 'upload',
@@ -55,6 +50,7 @@ export default ({props, route}) => {
       },
       data: formData,
     });
+    navigation.goBack();
   };
   escolherFoto = () => {
     ImagePicker.openPicker({
@@ -62,7 +58,6 @@ export default ({props, route}) => {
       height: 400,
       //cropping: true,
     }).then((image) => {
-      console.log(image);
       setImagem(image.path);
       setImagemSend(image);
     });

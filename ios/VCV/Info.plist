@@ -57,6 +57,8 @@
 	<string>Ask for photos</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>FontAwesome5_Solid.ttf</string>
+		<string>FontAwesome5_Regular.ttf</string>
 		<string>MaterialIcons.ttf</string>
 		<string>FontAwesome.ttf</string>
 	</array>

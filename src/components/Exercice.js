@@ -32,6 +32,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  desc: {
+    marginLeft: 20,
+  },
   pending: {
     height: 25,
     width: 25,

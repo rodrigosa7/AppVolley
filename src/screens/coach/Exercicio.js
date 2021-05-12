@@ -6,10 +6,12 @@ import {
   FlatList,
   Button,
   TouchableOpacity,
+  SafeAreaView
 } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import axios from 'axios';
 import Exercice from '../../components/Exercice';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 export default ({ props, navigation }) => {
   const [gesto, setGesto] = useState('');
@@ -57,7 +59,7 @@ export default ({ props, navigation }) => {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Picker
         selectedValue={gesto}
         onValueChange={(itemValue) => filterExercise(itemValue)}
@@ -82,14 +84,36 @@ export default ({ props, navigation }) => {
           )}
         />
       </View>
-      <Button title="Get exercicios" onPress={getExercicios}></Button>
-      <Button title="Add Exercise" onPress={addExercise}></Button>
-    </View>
+
+
+      <View styles={styles.botoes}>
+        <TouchableOpacity onPress={addExercise}>
+
+          <View
+            style={styles.button}>
+            
+            <Text>
+              Adicionar Exercicio
+            </Text>
+            <Icon name="dumbbell"></Icon>
+          </View>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  button: {
+    
+    backgroundColor: '#da581e',
+    marginTop: 10,
+    padding: 10,
+ 
+    alignItems: 'center',
+    borderRadius: 7,
+    width: "50%",
+    alignSelf: 'center',
   },
+
 });

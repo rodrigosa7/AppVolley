@@ -83,7 +83,7 @@ export default ({props, navigation}) => {
         <View styles={styles.button}>
           <TouchableOpacity onPress={addExercise}>
             <View style={styles.button}>
-              <Text>Adicionar Exercicio</Text>
+              <Text style={styles.texto}>Adicionar Exercicio</Text>
               <Icon name="volleyball-ball"></Icon>
             </View>
           </TouchableOpacity>
@@ -112,15 +112,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#da581e',
     marginTop: 10,
     padding: 10,
-    flexDirection: 'column',
-    alignItems: 'center',
+
     borderRadius: 7,
     width: '50%',
     alignSelf: 'center',
-    flex: 1,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    alignItems: 'flex-start',
+    alignItems: 'center',
   },
   item1: {
     height: '70%',

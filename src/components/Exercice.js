@@ -20,52 +20,16 @@ export default (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
+    alignSelf: 'center',
     borderColor: '#AAA',
     borderBottomWidth: 1,
-    alignItems: 'center',
+    borderRadius: 7,
     paddingVertical: 10,
+    marginBottom: 10,
     backgroundColor: '#FFF',
-  },
-  checkContainer: {
-    width: '20%',
-    alignItems: 'center',
-    justifyContent: 'center',
+    width: '90%',
   },
   desc: {
     marginLeft: 20,
-  },
-  pending: {
-    height: 25,
-    width: 25,
-    borderRadius: 13,
-    borderWidth: 1,
-    borderColor: '#555',
-  },
-  done: {
-    height: 25,
-    width: 25,
-    borderRadius: 13,
-    backgroundColor: '#4D7031',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  right: {
-    backgroundColor: 'red',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    paddingHorizontal: 20,
-  },
-  left: {
-    backgroundColor: 'red',
-    flexDirection: 'row',
-    alignItems: 'center',
-    flex: 1,
-  },
-
-  excludeIcon: {
-    marginLeft: 10,
   },
 });

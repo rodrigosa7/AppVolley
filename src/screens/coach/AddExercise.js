@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Text, View, TextInput, Image, Button, StyleSheet} from 'react-native';
+import {Text, View, TextInput, Image, Button, StyleSheet, SafeAreaView} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import axios from 'axios';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -64,7 +64,7 @@ export default ({props, route, navigation}) => {
   };
 
   return (
-    <View>
+    <SafeAreaView>
       <Text style={{fontSize: 20}}>Vamos adicionar exercicios</Text>
       <View style={styles.container}>
         <Text>Nome: </Text>
@@ -101,7 +101,7 @@ export default ({props, route, navigation}) => {
       </View>
       <Button title="Escolher Fotografia" onPress={escolherFoto}></Button>
       <Button title="Confirm" onPress={uploadExercise}></Button>
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -1,11 +1,11 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, SafeAreaView} from 'react-native';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import {FlatList} from 'react-native-gesture-handler';
 
 export default (props) => {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View stlye={styles.home}>
         <Text style={{fontSize: 32, marginTop: 20, marginLeft: 10}}>
           Bem-vindo Treinador,
@@ -18,7 +18,7 @@ export default (props) => {
         </Text>
         <FlatList></FlatList>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -7,11 +7,12 @@ import {
   FlatList,
   Button,
   TouchableOpacity,
+  SafeAreaView,
 } from 'react-native';
 
 export default ({props, route}) => {
   return (
-    <View>
+    <SafeAreaView>
       <Text>nome do exercicio: {route.params.item.exnome}</Text>
       <Text>descricao do exercicio: {route.params.item.exdescricao}</Text>
       <Image
@@ -22,6 +23,6 @@ export default ({props, route}) => {
         }}
         style={{width: 250, height: 250}}
       />
-    </View>
+    </SafeAreaView>
   );
 };

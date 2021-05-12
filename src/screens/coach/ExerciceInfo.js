@@ -43,7 +43,7 @@ export default ({props, route}) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#335C67',
+    backgroundColor: '#EFEFEF',
     height: '100%',
   },
   img: {
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   },
   title1: {
     fontWeight: 'bold',
-    color: '#ffffff',
+    color: '#ff6600',
     fontSize: 30,
     marginTop: 20,
     marginLeft: 15,
@@ -62,12 +62,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 22,
     fontWeight: 'bold',
-    color: '#ffffff',
+    color: '#ff6600',
     lineHeight: 36,
     textDecorationLine: 'underline',
   },
   text: {
-    color: '#f8f8f8',
+    color: '#333',
     fontSize: 18,
     marginLeft: 20,
   },

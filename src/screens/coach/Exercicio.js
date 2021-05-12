@@ -16,10 +16,10 @@ import ExerciceInfo from '../../screens/coach/ExerciceInfo';
 export default ({ props, navigation }) => {
   const [gesto, setGesto] = useState('');
   const [exercicios, setExercicios] = useState([]);
-
+  const [count, setCount] = useState(0);
   useEffect(() => {
     getExercicios();
-  });
+  }, [count]);
 
   getExercicios = async () => {
     try {
@@ -37,7 +37,7 @@ export default ({ props, navigation }) => {
   };
   filterExercise = async (tipoGesto) => {
     setGesto(tipoGesto)
-    if (tipoGesto == "all") {
+    if (tipoGesto == "todos") {
       try {
         const res = await axios.get(
           `http://volleyapi.sarapaiva.webtuga.net/exercise`,

@@ -21,15 +21,16 @@ export default (props) => {
 const styles = StyleSheet.create({
   container: {
     alignSelf: 'center',
-    borderColor: '#AAA',
-    borderBottomWidth: 1,
+    borderColor: '#7e7e7e',
+    borderWidth: 1,
     borderRadius: 7,
     paddingVertical: 10,
     marginBottom: 10,
-    backgroundColor: '#FFF',
+    backgroundColor: '#da581e',
     width: '90%',
   },
   desc: {
     marginLeft: 20,
+    color: '#000',
   },
 });

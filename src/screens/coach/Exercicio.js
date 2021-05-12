@@ -9,9 +9,7 @@ import {
 } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import axios from 'axios';
-import server from '../../common';
 import Exercice from '../../components/Exercice';
-import ExerciceInfo from '../../screens/coach/ExerciceInfo';
 
 export default ({ props, navigation }) => {
   const [gesto, setGesto] = useState('');

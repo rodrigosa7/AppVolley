@@ -9,7 +9,7 @@ target 'VCV' do
   use_react_native!(:path => config["reactNativePath"])
   #pod 'DateTimePicker', :path => '../node_modules/@react-native-community/datetimepicker/DateTimePicker.podspec'
   pod 'DateTimePicker'
-
+#v
 
   target 'VCVTests' do
     inherit! :complete

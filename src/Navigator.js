@@ -1,8 +1,8 @@
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-import {createDrawerNavigator} from '@react-navigation/drawer';
-import {create, createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { NavigationContainer, NavigationHelpersContext } from '@react-navigation/native';
+import { createStackNavigator, HeaderBackButton, HeaderTitle } from '@react-navigation/stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { create, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Auth from './screens/Auth';
 import Exercicio from './screens/coach/Exercicio';
@@ -40,11 +40,23 @@ const DrawerNavigator = () => {
 
 const AuthNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{headerShown: false}}>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
       {/* <Stack.Screen name="AuthOrApp" component={AuthOrApp} /> */}
       <Stack.Screen name="Auth" component={Auth} />
       <Stack.Screen name="HomeCoach" component={DrawerNavigator} />
-      <Stack.Screen name="InfoExercicio" component={ExerciceInfo} />
+      <Stack.Screen name="InfoExercicio" component={ExerciceInfo}  
+      options={{
+        headerShown: true,
+          headerTitle: null,
+          headerBackTitle: "Back"
+          /*headerLeft: (props) => (
+            <HeaderBackButton
+              {...props}
+              
+              
+              />
+          ),*/
+      }}/>
       <Stack.Screen name="AddExercise" component={AddExercise} />
     </Stack.Navigator>
   );

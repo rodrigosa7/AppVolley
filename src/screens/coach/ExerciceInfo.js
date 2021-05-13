@@ -10,14 +10,14 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
-import {SizedBox} from 'sizedbox';
+
 
 export default ({props, route}) => {
   return (
     <SafeAreaView style={styles.container}>
-      <SizedBox vertical={10} />
+      
       <Text style={styles.title1}>{route.params.item.exnome}</Text>
-      <SizedBox vertical={20} />
+     
       <View style={styles.img}>
         <Image
           style={{
@@ -32,10 +32,10 @@ export default ({props, route}) => {
           style={{width: 250, height: 250}}
         />
       </View>
-      <SizedBox vertical={10} />
+     
 
       <Text style={styles.title2}>Descricao do exercicio: </Text>
-      <SizedBox horizontal={10} />
+   
       <Text style={styles.text}>{route.params.item.exdescricao}</Text>
     </SafeAreaView>
   );

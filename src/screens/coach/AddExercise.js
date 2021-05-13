@@ -3,28 +3,23 @@ import {Text, View, TextInput, Image, Button, StyleSheet, SafeAreaView} from 're
 import {Picker} from '@react-native-picker/picker';
 import axios from 'axios';
 import ImagePicker from 'react-native-image-crop-picker';
+import {DropdownList, PickerDate, PickerDateTime} from 'react-native-ultimate-modal-picker'
 
 export default ({props, route, navigation}) => {
   const [descricao, setDescricao] = useState('');
   const [nome, setNome] = useState('');
   const [gesto, setGesto] = useState('');
-  const [gestos, setGestos] = useState([]);
   const [imagem, setImagem] = useState('https://reactjs.org/logo-og.png');
   const [imagemsend, setImagemSend] = useState(null);
-  useEffect(() => {
-    getGestos();
-  });
-
-  getGestos = async () => {
-    try {
-      const res = await axios.get(
-        `http://volleyapi.sarapaiva.webtuga.net/GestoTecnico`,
-      );
-      setGestos(res.data);
-    } catch (e) {
-      console.warn(e);
-    }
-  };
+  
+  const gestos = [
+    { label: 'Todos', value: 'Todos' },
+    { label: 'Passe', value: 'Passe' },
+    { label: 'Remate', value: 'Remate' },
+    { label: 'Serviço', value: 'Serviço' },
+    { label: 'Bloco', value: 'Bloco' },
+  ];
+  
 
   uploadExercise = () => {
     var formData = new FormData();
@@ -80,21 +75,13 @@ export default ({props, route, navigation}) => {
           onChangeText={setDescricao}
           value={descricao}></TextInput>
       </View>
-      <Text>Gesto: </Text>
-      <Picker
-        selectedValue={gesto}
-        onValueChange={(itemValue) => setGesto(itemValue)}
-        mode="dropdown">
-        {gestos.map((item, index) => {
-          return (
-            <Picker.Item
-              key={index}
-              value={item.idGesto}
-              label={item.NomeGesto}
-            />
-          );
-        })}
-      </Picker>
+      <DropdownList
+          title="Gesto Técnico"
+          items={gestos}
+          onChange={(item) => setGesto(item)}
+          
+        /> 
+      
       <View>
         <Text>Esquema: </Text>
         <Image source={{uri: imagem}} style={{width: 250, height: 250}} />

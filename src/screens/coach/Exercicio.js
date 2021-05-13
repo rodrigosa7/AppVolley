@@ -6,6 +6,7 @@ import axios from 'axios';
 import Exercice from '../../components/Exercice';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {DropdownList, PickerDate, PickerDateTime} from 'react-native-ultimate-modal-picker'
 
 export default ({props, navigation}) => {
   const [gesto, setGesto] = useState('');
@@ -13,10 +14,18 @@ export default ({props, navigation}) => {
   const [count, setCount] = useState(0);
   const [state, setState] = useState({});
 
+  const gestos = [
+    { label: 'Todos', value: 'Todos' },
+    { label: 'Passe', value: 'Passe' },
+    { label: 'Remate', value: 'Remate' },
+    { label: 'Serviço', value: 'Serviço' },
+    { label: 'Bloco', value: 'Bloco' },
+  ];
+
   useEffect(() => {
     getExercicios();
     return () => {
-      setState({}); // This worked for me
+      setState({}); 
     };
   }, [count]);
 
@@ -36,7 +45,7 @@ export default ({props, navigation}) => {
   };
   filterExercise = async (tipoGesto) => {
     setGesto(tipoGesto);
-    if (tipoGesto == 'todos') {
+    if (tipoGesto == 'Todos') {
       try {
         const res = await axios.get(
           `http://volleyapi.sarapaiva.webtuga.net/exercise`,
@@ -60,6 +69,7 @@ export default ({props, navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.item1}>
+     
         <Text
           style={{
             fontSize: 40,
@@ -69,7 +79,12 @@ export default ({props, navigation}) => {
           }}>
           Lista de Exercicios
         </Text>
-
+        <DropdownList
+          title="Gesto Técnico"
+          items={gestos}
+          onChange={(item) => filterExercise(item)}
+          
+        /> 
         <View style={styles.lista}>
           <FlatList
             data={exercicios}
@@ -92,20 +107,6 @@ export default ({props, navigation}) => {
           </TouchableOpacity>
         </View>
       </View>
-      <View style={styles.item2}>
-        <Text style={{fontSize: 20, marginTop: 20, marginLeft: 15}}>
-          Filtro:
-        </Text>
-        <Picker
-          selectedValue={gesto}
-          onValueChange={(itemValue) => filterExercise(itemValue)}
-          mode="dropdown">
-          <Picker.Item label="Todos" value="todos" />
-          <Picker.Item label="Passe" value="passe" />
-          <Picker.Item label="Remate" value="remate" />
-          <Picker.Item label="Serviço" value="servico" />
-        </Picker>
-      </View>
     </SafeAreaView>
   );
 };
@@ -121,12 +122,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     alignItems: 'center',
   },
-  item1: {
-    height: '70%',
-  },
-  item2: {
-    height: '30%',
-  },
+  
   background: {
     flex: 1,
     width: '100%',

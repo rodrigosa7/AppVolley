@@ -45,8 +45,9 @@ export default ({props, route, navigation}) => {
       uri:
         Platform.OS === 'android'
           ? imagemsend.path
-          : imagemsend.path.replace('file://', ''),
+          : imagemsend.path,
     });
+    console.log(imagemsend.path.replace('file://', ''))
 
     axios({
       method: 'post',
@@ -72,18 +73,19 @@ export default ({props, route, navigation}) => {
   return (
     <SafeAreaView>
       <Text style={styles.title1}>Criar exercicios</Text>
-
+      <Text style={[styles.text, {marginLeft: 15, marginBottom: 10}]}>Nome: </Text>
       <View style={styles.container}>
-        <Text style={styles.text}>Nome: </Text>
+        
         <TextInput
-          style={styles.inputsss}
+          style={styles.input}
           onChangeText={setNome}
           value={nome}></TextInput>
       </View>
+      <Text style={[styles.text, {marginLeft: 15, marginBottom: 10}]}>Descrição: </Text>
       <View style={styles.container}>
-        <Text style={styles.text}>Descrição: </Text>
+        
         <TextInput
-          style={styles.inputsss}
+          style={styles.input}
           onChangeText={setDescricao}
           value={descricao}></TextInput>
       </View>
@@ -95,7 +97,7 @@ export default ({props, route, navigation}) => {
       />
 
       <View>
-        <Text style={styles.text}>Media</Text>
+      <Text style={[styles.text, {marginLeft: 15, marginBottom: 10}]}>Imagem do Esquema</Text>
 
         <View style={styles.img}>
           <Image source={{uri: imagem}} style={{width: 250, height: 250}} />
@@ -109,16 +111,18 @@ export default ({props, route, navigation}) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
-    height: 40,
-    backgroundColor: '#EFEFEF',
+    backgroundColor: '#FFF',
     borderRadius: 20,
     flexDirection: 'row',
     alignItems: 'center',
+    alignSelf: 'center',
+    width: '90%',
+    marginBottom: 10
   },
-  inputsss: {
-    width: '70%',
-    backgroundColor: '#FFF',
+  input: {
+    height: 40,
+    marginLeft: 20,
+    width: '50%',
   },
   title1: {
     fontWeight: 'bold',

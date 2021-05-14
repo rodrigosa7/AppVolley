@@ -24,11 +24,18 @@ export default ({props, navigation}) => {
 
   useEffect(() => {
     getExercicios();
+    
+  });
+
+  //Verificar leak de memória!
+  /*
+  useEffect(() => {
+    getExercicios();
     return () => {
       setState({}); 
     };
   }, [count]);
-
+  */
   getExercicios = async () => {
     try {
       const res = await axios.get(

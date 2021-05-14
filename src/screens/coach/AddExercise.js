@@ -42,12 +42,9 @@ export default ({props, route, navigation}) => {
     formData.append('foto', {
       name: 'upload',
       type: imagemsend.mime,
-      uri:
-        Platform.OS === 'android'
-          ? imagemsend.path
-          : imagemsend.path,
+      uri: Platform.OS === 'android' ? imagemsend.path : imagemsend.path,
     });
-    console.log(imagemsend.path.replace('file://', ''))
+    console.log(imagemsend.path.replace('file://', ''));
 
     axios({
       method: 'post',
@@ -73,17 +70,19 @@ export default ({props, route, navigation}) => {
   return (
     <SafeAreaView>
       <Text style={styles.title1}>Criar exercicios</Text>
-      <Text style={[styles.text, {marginLeft: 15, marginBottom: 10}]}>Nome: </Text>
+      <Text style={[styles.text, {marginLeft: 15, marginBottom: 10}]}>
+        Nome:{' '}
+      </Text>
       <View style={styles.container}>
-        
         <TextInput
           style={styles.input}
           onChangeText={setNome}
           value={nome}></TextInput>
       </View>
-      <Text style={[styles.text, {marginLeft: 15, marginBottom: 10}]}>Descrição: </Text>
+      <Text style={[styles.text, {marginLeft: 15, marginBottom: 10}]}>
+        Descrição:{' '}
+      </Text>
       <View style={styles.container}>
-        
         <TextInput
           style={styles.input}
           onChangeText={setDescricao}
@@ -97,7 +96,9 @@ export default ({props, route, navigation}) => {
       />
 
       <View>
-      <Text style={[styles.text, {marginLeft: 15, marginBottom: 10}]}>Imagem do Esquema</Text>
+        <Text style={[styles.text, {marginLeft: 15, marginBottom: 10}]}>
+          Imagem do Esquema
+        </Text>
 
         <View style={styles.img}>
           <Image source={{uri: imagem}} style={{width: 250, height: 250}} />
@@ -117,7 +118,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     width: '90%',
-    marginBottom: 10
+    marginBottom: 10,
   },
   input: {
     height: 40,

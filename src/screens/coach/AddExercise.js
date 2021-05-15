@@ -25,7 +25,6 @@ export default ({props, route, navigation}) => {
   const [imagemsend, setImagemSend] = useState(null);
 
   const gestos = [
-    {label: 'Todos', value: 'Todos'},
     {label: 'Passe', value: 'Passe'},
     {label: 'Remate', value: 'Remate'},
     {label: 'Serviço', value: 'Serviço'},

@@ -21,7 +21,7 @@ export default (props) => {
 const styles = StyleSheet.create({
   container: {
     alignSelf: 'center',
-    borderColor: '#7e7e7e',
+    borderColor: '#000',
     borderWidth: 1,
     borderRadius: 7,
     paddingVertical: 10,

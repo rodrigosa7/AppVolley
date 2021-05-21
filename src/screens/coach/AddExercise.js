@@ -7,6 +7,7 @@ import {
   Button,
   StyleSheet,
   SafeAreaView,
+  Alert,
 } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import axios from 'axios';
@@ -33,37 +34,55 @@ export default ({props, route, navigation}) => {
 
   uploadExercise = () => {
     var formData = new FormData();
+    if (!descricao || !gesto || !nome || imagemsend == null) {
+      Alert.alert('Erro', 'Existem campos em branco', [
+        {
+          text: 'Confirmar',
+          style: 'cancel',
+        },
+      ]);
+    } else {
+      formData.append('nome', nome);
+      formData.append('desc', descricao);
+      formData.append('gesto', gesto);
 
-    formData.append('nome', nome);
-    formData.append('desc', descricao);
-    formData.append('gesto', gesto);
+      formData.append('foto', {
+        name: 'upload',
+        type: imagemsend.mime,
+        uri: Platform.OS === 'android' ? imagemsend.path : imagemsend.path,
+      });
 
-    formData.append('foto', {
-      name: 'upload',
-      type: imagemsend.mime,
-      uri: Platform.OS === 'android' ? imagemsend.path : imagemsend.path,
-    });
-    console.log(imagemsend.path.replace('file://', ''));
-
-    axios({
-      method: 'post',
-      url: 'http://volleyapi.sarapaiva.webtuga.net/exercise',
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-      data: formData,
-    });
-    navigation.goBack();
+      axios({
+        method: 'post',
+        url: 'http://volleyapi.sarapaiva.webtuga.net/exercise',
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        data: formData,
+      }).then(() => {
+        navigation.goBack();
+      });
+    }
   };
   escolherFoto = () => {
     ImagePicker.openPicker({
       width: 300,
       height: 400,
       //cropping: true,
-    }).then((image) => {
-      setImagem(image.path);
-      setImagemSend(image);
-    });
+    })
+      .then((image) => {
+        setImagem(image.path);
+        setImagemSend(image);
+      })
+      .catch((err) => {
+        //console.log(err);
+        Alert.alert('Erro', 'Nenhuma Imagem Selecionada', [
+          {
+            text: 'Confirmar',
+            style: 'cancel',
+          },
+        ]);
+      });
   };
 
   return (

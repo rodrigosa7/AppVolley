@@ -19,20 +19,13 @@ import AuthInput from '../components/AuthInput';
 
 import {server, showError, showSuccess} from '../common';
 
-const initialState = {
-  name: '',
-  email: '',
-  password: '',
-  confirmPassword: '',
-  stageNew: false,
-};
-
 export default (props) => {
-  const [state, setState] = useState(initialState);
+  //const [state, setState] = useState(initialState);
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+  const [stageNew, setStageNew] = useState(false);
   const signinOrSignup = () => {
-    if (state.stageNew) {
+    if (stageNew) {
       signup();
     } else {
       signin();
@@ -40,43 +33,59 @@ export default (props) => {
   };
 
   const signup = async () => {
-    try {
+    /*try {
       await axios.post(`${server}/signup`, {
         name: state.name,
         email: state.email,
         password: state.password,
         confirmPassword: state.confirmPassword,
       });
-
-      showSuccess('Usuário cadastro!');
-      setState({...initialState});
     } catch (e) {
       showError(e);
-    }
+    }*/
   };
 
-  const signin = () => {
+  signin = async () => {
     // props.navigation.navigate('HomeCoach');
-    props.navigation.dispatch(
-      CommonActions.reset({
-        index: 0,
-        routes: [
+
+    try {
+      const res = await axios.post(
+        `http://volleyapi.sarapaiva.webtuga.net/entrar`,
+        {
+          username: email,
+          password: password,
+        },
+      );
+      //console.log(res.data);
+      if (res.data.status && res.data.tipo == 1) {
+        props.navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [
+              {
+                name: 'HomeCoach',
+              },
+            ],
+          }),
+        );
+      } else {
+        console.log('error');
+        Alert.alert('Erro', 'Credenciais Erradas', [
           {
-            name: 'HomeCoach',
+            text: 'Confirmar',
+            style: 'cancel',
           },
-        ],
-      }),
-    );
+        ]);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+    /*  */
   };
 
   const validations = [];
-  validations.push(state.email && state.email.includes('@'));
-  validations.push(state.password && state.password.length >= 6);
-
-  if (state.stageNew) {
-    validations.push(state.name && state.name.trim().length >= 3);
-    validations.push(state.password === state.confirmPassword);
-  }
+  validations.push(email && email.includes('@'));
+  validations.push(password && password.length >= 6);
 
   const validForm = validations.reduce((t, a) => t && a);
 
@@ -87,7 +96,7 @@ export default (props) => {
       </View>
       <View style={styles.formContainer}>
         <Text style={styles.subtitle}>
-          {state.stageNew ? 'Pedir Credenciais' : 'Introduza os dados'}
+          {stageNew ? 'Pedir Credenciais' : 'Introduza os dados'}
         </Text>
 
         <AuthInput
@@ -97,7 +106,7 @@ export default (props) => {
           style={styles.input}
           onChangeText={(email) => setEmail(email)}
         />
-        {!state.stageNew && (
+        {!stageNew && (
           <AuthInput
             icon="lock"
             placeholder="Senha"
@@ -107,21 +116,20 @@ export default (props) => {
             onChangeText={(password) => setPassword(password)}
           />
         )}
-        <TouchableOpacity onPress={signinOrSignup}>
-          {/* disabled={!validForm}>  */}
+        <TouchableOpacity onPress={signinOrSignup} disabled={!validForm}>
           <View
             style={[styles.button, validForm ? {} : {backgroundColor: '#AAA'}]}>
             <Text style={styles.buttonText}>
-              {state.stageNew ? 'Registrar' : 'Entrar'}
+              {stageNew ? 'Registrar' : 'Entrar'}
             </Text>
           </View>
         </TouchableOpacity>
       </View>
       <TouchableOpacity
         style={{padding: 10}}
-        onPress={() => setState({stageNew: !state.stageNew})}>
+        onPress={() => setStageNew(!stageNew)}>
         <Text style={styles.buttonText}>
-          {state.stageNew ? 'Já possui conta?' : 'Pedir Credenciais'}
+          {stageNew ? 'Já possui conta?' : 'Pedir Credenciais'}
         </Text>
       </TouchableOpacity>
     </ImageBackground>
@@ -166,7 +174,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
   },
   button: {
-    backgroundColor: '#080',
+    backgroundColor: '#da581e',
     marginTop: 10,
     padding: 10,
     alignItems: 'center',

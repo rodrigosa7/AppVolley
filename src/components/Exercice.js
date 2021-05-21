@@ -13,7 +13,7 @@ import 'moment/locale/pt';
 export default (props) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.desc}>{props.exdescricao}</Text>
+      <Text style={styles.desc}>{props.exnome}</Text>
     </View>
   );
 };

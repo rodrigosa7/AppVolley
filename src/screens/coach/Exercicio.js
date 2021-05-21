@@ -6,6 +6,7 @@ import axios from 'axios';
 import Exercice from '../../components/Exercice';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {useIsFocused} from '@react-navigation/native';
 import {
   DropdownList,
   PickerDate,
@@ -25,10 +26,16 @@ export default ({props, navigation}) => {
     {label: 'Serviço', value: 'Serviço'},
     {label: 'Bloco', value: 'Bloco'},
   ];
-
+  /*
   useEffect(() => {
     getExercicios();
   }, []);
+*/
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    isFocused && getExercicios();
+  }, [isFocused]);
 
   //Verificar leak de memória!
   /*
@@ -85,7 +92,6 @@ export default ({props, navigation}) => {
             marginTop: 20,
             marginLeft: 15,
             marginBottom: 15,
-            fontFamily: 'Roboto',
           }}>
           Lista de Exercicíos
         </Text>
@@ -107,7 +113,7 @@ export default ({props, navigation}) => {
           />
         </View>
 
-        <View>
+        <View style={styles.fim}>
           <TouchableOpacity onPress={addExercise}>
             <View style={styles.button}>
               <Text style={styles.texto}>Adicionar Exercicio</Text>
@@ -130,6 +136,17 @@ const styles = StyleSheet.create({
     //width: '50%',
     alignSelf: 'center',
     alignItems: 'center',
+  },
+  fim: {
+    position: 'relative',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  lista: {
+    //flex: 2,
+    height: '69%',
+    marginBottom: 10,
   },
 
   background: {

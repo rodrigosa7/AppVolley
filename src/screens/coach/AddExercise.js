@@ -1,28 +1,27 @@
-import React, {useState, useEffect} from 'react';
 import {
   Text,
   View,
   TextInput,
   Image,
-  Button,
-  StyleSheet,
   SafeAreaView,
-  Alert,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import {Picker} from '@react-native-picker/picker';
-import axios from 'axios';
+import React, {useState} from 'react';
+
+import {DropdownList} from 'react-native-ultimate-modal-picker';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 import ImagePicker from 'react-native-image-crop-picker';
-import {
-  DropdownList,
-  PickerDate,
-  PickerDateTime,
-} from 'react-native-ultimate-modal-picker';
+import axios from 'axios';
 
 export default ({props, route, navigation}) => {
   const [descricao, setDescricao] = useState('');
   const [nome, setNome] = useState('');
   const [gesto, setGesto] = useState('');
-  const [imagem, setImagem] = useState('https://reactjs.org/logo-og.png');
+  const [imagem, setImagem] = useState(null);
   const [imagemsend, setImagemSend] = useState(null);
 
   const gestos = [
@@ -75,6 +74,7 @@ export default ({props, route, navigation}) => {
         setImagemSend(image);
       })
       .catch((err) => {
+        setImagem(null);
         //console.log(err);
         Alert.alert('Erro', 'Nenhuma Imagem Selecionada', [
           {
@@ -86,23 +86,25 @@ export default ({props, route, navigation}) => {
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{flex: 1}}>
       <Text style={styles.title1}>Criar exercicios</Text>
       <Text style={[styles.text, {marginLeft: 15, marginBottom: 10}]}>
-        Nome:{' '}
+        Nome:{''}
       </Text>
       <View style={styles.container}>
         <TextInput
           style={styles.input}
+          placeholder={'Nome'}
           onChangeText={setNome}
           value={nome}></TextInput>
       </View>
       <Text style={[styles.text, {marginLeft: 15, marginBottom: 10}]}>
-        Descrição:{' '}
+        Descrição:{''}
       </Text>
       <View style={styles.container}>
         <TextInput
           style={styles.input}
+          placeholder={'Descrição'}
           onChangeText={setDescricao}
           value={descricao}></TextInput>
       </View>
@@ -117,13 +119,28 @@ export default ({props, route, navigation}) => {
         <Text style={[styles.text, {marginLeft: 15, marginBottom: 10}]}>
           Imagem do Esquema
         </Text>
-
-        <View style={styles.img}>
-          <Image source={{uri: imagem}} style={{width: 250, height: 250}} />
-        </View>
+        {imagem != null && (
+          <View style={styles.img}>
+            <Image source={{uri: imagem}} style={{width: 250, height: 250}} />
+          </View>
+        )}
       </View>
-      <Button title="Escolher Media" onPress={escolherFoto}></Button>
-      <Button title="Confirm" onPress={uploadExercise}></Button>
+      <View style={styles.fim}>
+        <TouchableOpacity onPress={escolherFoto}>
+          <View style={styles.buttonImage}>
+            <Text style={styles.texto}>Escolher Imagem</Text>
+            <Icon style={styles.icone} name="image"></Icon>
+          </View>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.fim}>
+        <TouchableOpacity style={styles.botoes} onPress={uploadExercise}>
+          <View style={styles.button}>
+            <Text style={styles.texto}>Adicionar</Text>
+            <Icon style={styles.icone} name="check"></Icon>
+          </View>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 };
@@ -158,5 +175,37 @@ const styles = StyleSheet.create({
   text: {
     color: '#333',
     fontSize: 18,
+  },
+  botoes: {
+    position: 'absolute',
+    right: 0,
+    bottom: 0,
+    left: 0,
+  },
+  button: {
+    backgroundColor: '#080',
+    marginTop: 10,
+    padding: 10,
+    flexDirection: 'row',
+    width: '40%',
+    borderRadius: 7,
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonImage: {
+    backgroundColor: '#da581e',
+    marginTop: 10,
+    padding: 10,
+    flexDirection: 'row',
+    borderRadius: 7,
+    alignSelf: 'center',
+    alignItems: 'center',
+  },
+  fim: {
+    flex: 1,
+  },
+  icone: {
+    marginLeft: 10,
   },
 });

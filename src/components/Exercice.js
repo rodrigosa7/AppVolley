@@ -1,14 +1,12 @@
-import React from 'react';
+import 'moment/locale/pt';
+
 import {
-  View,
-  Text,
   StyleSheet,
-  TouchableWithoutFeedback,
-  TouchableOpacity,
+  Text,
+  View
 } from 'react-native';
 
-import moment from 'moment';
-import 'moment/locale/pt';
+import React from 'react';
 
 export default (props) => {
   return (

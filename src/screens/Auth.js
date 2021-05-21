@@ -1,23 +1,18 @@
-import React, {useState} from 'react';
 import {
-  ImageBackground,
-  Text,
-  StyleSheet,
-  View,
-  TouchableOpacity,
   Alert,
+  ImageBackground,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import React, { useState } from 'react';
 
-import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {CommonActions} from '@react-navigation/native';
-
-import backgroundImage from '../../assets/login.jpg';
 //import commonStyles from '../commonStyles';
 import AuthInput from '../components/AuthInput';
-
-import {server, showError, showSuccess} from '../common';
+import { CommonActions } from '@react-navigation/native';
+import axios from 'axios';
+import backgroundImage from '../../assets/login.jpg';
 
 export default (props) => {
   //const [state, setState] = useState(initialState);

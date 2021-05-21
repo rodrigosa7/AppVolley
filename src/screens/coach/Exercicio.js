@@ -1,17 +1,14 @@
-import React, {useState, useEffect} from 'react';
-import {Text, View, StyleSheet, FlatList, SafeAreaView} from 'react-native';
+import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
 
-import {Picker} from '@react-native-picker/picker';
-import axios from 'axios';
+import {
+  DropdownList
+} from 'react-native-ultimate-modal-picker';
 import Exercice from '../../components/Exercice';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {useIsFocused} from '@react-navigation/native';
-import {
-  DropdownList,
-  PickerDate,
-  PickerDateTime,
-} from 'react-native-ultimate-modal-picker';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import axios from 'axios';
+import { useIsFocused } from '@react-navigation/native';
 
 export default ({props, navigation}) => {
   const [gesto, setGesto] = useState('');

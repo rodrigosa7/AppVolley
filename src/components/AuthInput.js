@@ -1,8 +1,9 @@
-import React from 'react';
-import {View, TextInput, StyleSheet} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { StyleSheet, TextInput, View } from 'react-native';
 
-export default props => {
+import Icon from 'react-native-vector-icons/FontAwesome';
+import React from 'react';
+
+export default (props) => {
   return (
     <View style={[styles.container, props.style]}>
       <Icon name={props.icon} size={20} style={styles.icon} />

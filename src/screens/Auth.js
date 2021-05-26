@@ -4,13 +4,14 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 //import commonStyles from '../commonStyles';
 import AuthInput from '../components/AuthInput';
-import { CommonActions } from '@react-navigation/native';
+import {CommonActions} from '@react-navigation/native';
 import axios from 'axios';
 import backgroundImage from '../../assets/login.jpg';
 
@@ -19,6 +20,7 @@ export default (props) => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [stageNew, setStageNew] = useState(false);
+
   const signinOrSignup = () => {
     if (stageNew) {
       signup();
@@ -51,6 +53,7 @@ export default (props) => {
           password: password,
         },
       );
+      AsyncStorage.setItem('userData', JSON.stringify(res.data));
       //console.log(res.data);
       if (res.data.status && res.data.tipo == 1) {
         props.navigation.dispatch(

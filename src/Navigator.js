@@ -16,6 +16,7 @@ import CreateEvent from './screens/coach/CreateEvent';
 import ExerciceInfo from './screens/coach/ExerciceInfo';
 import Exercicio from './screens/coach/Exercicio';
 import Home from './screens/coach/Home';
+import LoginOrEnter from './screens/LoginOrEnter';
 import React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 
@@ -49,7 +50,7 @@ const DrawerNavigator = () => {
 const AuthNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
-      {/* <Stack.Screen name="AuthOrApp" component={AuthOrApp} /> */}
+      <Stack.Screen name="AuthOrApp" component={LoginOrEnter} />
       <Stack.Screen name="Auth" component={Auth} />
       <Stack.Screen name="HomeCoach" component={DrawerNavigator} />
       <Stack.Screen

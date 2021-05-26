@@ -1,18 +1,15 @@
 import {
-  Text,
-  View,
-  TextInput,
   Image,
   SafeAreaView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 
-import {DropdownList} from 'react-native-ultimate-modal-picker';
+import { DropdownList } from 'react-native-ultimate-modal-picker';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import ImagePicker from 'react-native-image-crop-picker';
 import axios from 'axios';

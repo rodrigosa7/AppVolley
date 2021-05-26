@@ -1,16 +1,23 @@
-import React from 'react';
-import { NavigationContainer, NavigationHelpersContext } from '@react-navigation/native';
-import { createStackNavigator, HeaderBackButton, HeaderTitle } from '@react-navigation/stack';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import { create, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {
+  HeaderBackButton,
+  HeaderTitle,
+  createStackNavigator,
+} from '@react-navigation/stack';
+import {
+  NavigationContainer,
+  NavigationHelpersContext,
+} from '@react-navigation/native';
+import {create, createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
+import AddExercise from './screens/coach/AddExercise';
+import Atletas from './screens/coach/Athelets';
 import Auth from './screens/Auth';
+import CreateEvent from './screens/coach/CreateEvent';
+import ExerciceInfo from './screens/coach/ExerciceInfo';
 import Exercicio from './screens/coach/Exercicio';
 import Home from './screens/coach/Home';
-import ExerciceInfo from './screens/coach/ExerciceInfo';
-import AddExercise from './screens/coach/AddExercise';
-
-import CreateEvent from './screens/coach/CreateEvent';
+import React from 'react';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 
 //import AuthOrApp from './screens/AuthOrApp';
 // import Menu from './screens/Menu';
@@ -26,6 +33,7 @@ const DrawerNavigator = () => {
       <Drawer.Screen name="Home" component={Home} />
       <Drawer.Screen name="Criar Evento" component={CreateEvent} />
       <Drawer.Screen name="Exercicio" component={Exercicio} />
+      <Drawer.Screen name="Atletas" component={Atletas} />
       {/* <Drawer.Screen
         name="ExercicioInfo"
         component={ExerciceInfo}
@@ -40,15 +48,17 @@ const DrawerNavigator = () => {
 
 const AuthNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       {/* <Stack.Screen name="AuthOrApp" component={AuthOrApp} /> */}
       <Stack.Screen name="Auth" component={Auth} />
       <Stack.Screen name="HomeCoach" component={DrawerNavigator} />
-      <Stack.Screen name="InfoExercicio" component={ExerciceInfo}  
-      options={{
-        headerShown: true,
+      <Stack.Screen
+        name="InfoExercicio"
+        component={ExerciceInfo}
+        options={{
+          headerShown: true,
           headerTitle: null,
-          headerBackTitle: "Back"
+          headerBackTitle: 'Back',
           /*headerLeft: (props) => (
             <HeaderBackButton
               {...props}
@@ -56,7 +66,8 @@ const AuthNavigator = () => {
               
               />
           ),*/
-      }}/>
+        }}
+      />
       <Stack.Screen name="AddExercise" component={AddExercise} />
     </Stack.Navigator>
   );

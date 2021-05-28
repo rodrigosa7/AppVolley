@@ -24,7 +24,6 @@ export default () => {
   }, [isFocused]);
 
   const getAtletas = async () => {
-    console.log(`${server}/atleta`);
     try {
       const res = await axios.get(`${server}/atleta`);
       setAtletas(res.data);

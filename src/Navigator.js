@@ -17,6 +17,7 @@ import ExerciceInfo from './screens/coach/ExerciceInfo';
 import Exercicio from './screens/coach/Exercicio';
 import Home from './screens/coach/Home';
 import LoginOrEnter from './screens/LoginOrEnter';
+import Menu from './screens/Menu';
 import React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 
@@ -30,7 +31,7 @@ const Tab = createBottomTabNavigator();
 
 const DrawerNavigator = () => {
   return (
-    <Drawer.Navigator>
+    <Drawer.Navigator drawerContent={(props) => <Menu {...props} />}>
       <Drawer.Screen name="Home" component={Home} />
       <Drawer.Screen name="Criar Evento" component={CreateEvent} />
       <Drawer.Screen name="Exercicio" component={Exercicio} />

@@ -11,10 +11,9 @@ import React, {useEffect, useState} from 'react';
 import Atleta from './../../components/Atleta';
 import axios from 'axios';
 import {server} from '../../common';
-//import server from '../../common';
 import {useIsFocused} from '@react-navigation/native';
 
-export default () => {
+export default ({navigation}) => {
   const [atletas, setAtletas] = useState([]);
 
   const isFocused = useIsFocused();
@@ -41,8 +40,7 @@ export default () => {
           keyExtractor={(item) => `${item.idAthlete}`}
           renderItem={({item}) => (
             <TouchableOpacity
-            /*onPress={() => navigation.navigate('InfoExercicio', {item})}*/
-            >
+              onPress={() => navigation.navigate('InfoAthelets', {item})}>
               <Atleta {...item} />
             </TouchableOpacity>
           )}

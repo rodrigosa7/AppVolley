@@ -9,6 +9,7 @@ import {
 } from '@react-navigation/native';
 import {create, createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
+import AddAvaliacao from './screens/coach/AddAvaliacao';
 import AddExercise from './screens/coach/AddExercise';
 import Atletas from './screens/coach/Athelets';
 import Auth from './screens/Auth';
@@ -16,6 +17,7 @@ import CreateEvent from './screens/coach/CreateEvent';
 import ExerciceInfo from './screens/coach/ExerciceInfo';
 import Exercicio from './screens/coach/Exercicio';
 import Home from './screens/coach/Home';
+import InfoAthelets from './screens/coach/InfoAthelets';
 import LoginOrEnter from './screens/LoginOrEnter';
 import Menu from './screens/Menu';
 import React from 'react';
@@ -61,13 +63,24 @@ const AuthNavigator = () => {
           headerShown: true,
           headerTitle: null,
           headerBackTitle: 'Back',
-          /*headerLeft: (props) => (
-            <HeaderBackButton
-              {...props}
-              
-              
-              />
-          ),*/
+        }}
+      />
+      <Stack.Screen
+        name="InfoAthelets"
+        component={InfoAthelets}
+        options={{
+          headerShown: true,
+          headerTitle: null,
+          headerBackTitle: 'Back',
+        }}
+      />
+      <Stack.Screen
+        name="AddAvaliacao"
+        component={AddAvaliacao}
+        options={{
+          headerShown: true,
+          headerTitle: null,
+          headerBackTitle: 'Back',
         }}
       />
       <Stack.Screen name="AddExercise" component={AddExercise} />

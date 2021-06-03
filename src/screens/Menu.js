@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   logoutIcon: {
-    marginLeft: 20,
+    marginLeft: 10,
     flexDirection: 'row',
     marginTop: 'auto',
   },

@@ -143,6 +143,7 @@ export default ({props, navigation}) => {
               <Icon name="volleyball-ball"></Icon>
             </View>
           </TouchableOpacity>
+          
         </View>
       </View>
     </SafeAreaView>

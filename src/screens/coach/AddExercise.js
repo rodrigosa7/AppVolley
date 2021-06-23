@@ -33,7 +33,6 @@ export default ({props, route, navigation}) => {
   ];
 
   uploadExercise = () => {
-    console.log('OLA GESTO: ', gesto);
     var formData = new FormData();
     if (!descricao || !gesto || !nome || imagemsend == null) {
       Alert.alert('Erro', 'Existem campos em branco', [

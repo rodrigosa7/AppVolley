@@ -34,6 +34,9 @@ export default ({route, navigation}) => {
   const addAvaliacao = () => {
     navigation.navigate('AddAvaliacao', {id});
   };
+  const addVideo = () => {
+    navigation.navigate('UploadVideo');
+  };
 
   return (
     <SafeAreaView>
@@ -53,8 +56,16 @@ export default ({route, navigation}) => {
       <View style={styles.fim}>
         <TouchableOpacity onPress={addAvaliacao}>
           <View style={styles.button}>
-            <Text style={styles.texto}>Nova Avaliação</Text>
+            <Text style={[styles.texto, {marginBottom: 5}]}>
+              Nova Avaliação
+            </Text>
             <Icon name="calendar-check"></Icon>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={addVideo}>
+          <View style={[styles.button, {marginLeft: 5}]}>
+            <Text style={[styles.texto, {marginBottom: 5}]}>Upload Vídeo</Text>
+            <Icon name="video"></Icon>
           </View>
         </TouchableOpacity>
       </View>
@@ -78,13 +89,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#da581e',
     marginTop: 10,
     padding: 10,
-
+    width: 120,
     borderRadius: 7,
     //width: '50%',
     alignSelf: 'center',
     alignItems: 'center',
   },
   fim: {
+    flexDirection: 'row',
     position: 'relative',
     alignItems: 'center',
     justifyContent: 'center',

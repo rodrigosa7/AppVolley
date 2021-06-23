@@ -22,6 +22,7 @@ import InfoAthelets from './screens/coach/InfoAthelets';
 import LoginOrEnter from './screens/LoginOrEnter';
 import Menu from './screens/Menu';
 import React from 'react';
+import UploadVideo from './screens/coach/UploadVideo';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 
 //import AuthOrApp from './screens/AuthOrApp';
@@ -93,6 +94,15 @@ const AuthNavigator = () => {
         }}
       />
       <Stack.Screen name="AddExercise" component={AddExercise} />
+      <Stack.Screen
+        name="UploadVideo"
+        component={UploadVideo}
+        options={{
+          headerShown: true,
+          headerTitle: null,
+          headerBackTitle: 'Back',
+        }}
+      />
     </Stack.Navigator>
   );
 };

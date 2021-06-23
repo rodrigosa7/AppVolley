@@ -55,17 +55,30 @@ export default (props) => {
       );
       AsyncStorage.setItem('userData', JSON.stringify(res.data));
       //console.log(res.data);
-      if (res.data.status && res.data.tipo == 1) {
-        props.navigation.dispatch(
-          CommonActions.reset({
-            index: 0,
-            routes: [
-              {
-                name: 'HomeCoach',
-              },
-            ],
-          }),
-        );
+      if (res.data.status) {
+        if (res.data.tipo == 1) {
+          props.navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [
+                {
+                  name: 'HomeCoach',
+                },
+              ],
+            }),
+          );
+        } else {
+          props.navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [
+                {
+                  name: 'HomeParent',
+                },
+              ],
+            }),
+          );
+        }
       } else {
         console.log('error');
         Alert.alert('Erro', 'Credenciais Erradas', [

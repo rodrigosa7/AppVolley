@@ -17,6 +17,7 @@ import CreateEvent from './screens/coach/CreateEvent';
 import ExerciceInfo from './screens/coach/ExerciceInfo';
 import Exercicio from './screens/coach/Exercicio';
 import Home from './screens/coach/Home';
+import HomeParent from './screens/parent/Home';
 import InfoAthelets from './screens/coach/InfoAthelets';
 import LoginOrEnter from './screens/LoginOrEnter';
 import Menu from './screens/Menu';
@@ -49,6 +50,13 @@ const DrawerNavigator = () => {
     </Drawer.Navigator>
   );
 };
+const DrawerNavigatorParent = () => {
+  return (
+    <Drawer.Navigator drawerContent={(props) => <Menu {...props} />}>
+      <Drawer.Screen name="Home" component={HomeParent} />
+    </Drawer.Navigator>
+  );
+};
 
 const AuthNavigator = () => {
   return (
@@ -56,6 +64,7 @@ const AuthNavigator = () => {
       <Stack.Screen name="AuthOrApp" component={LoginOrEnter} />
       <Stack.Screen name="Auth" component={Auth} />
       <Stack.Screen name="HomeCoach" component={DrawerNavigator} />
+      <Stack.Screen name="HomeParent" component={DrawerNavigatorParent} />
       <Stack.Screen
         name="InfoExercicio"
         component={ExerciceInfo}

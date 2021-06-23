@@ -1,9 +1,18 @@
-import {FlatList, SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import {
+  Dimensions,
+  FlatList,
+  Platform,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 
 import {DropdownList} from 'react-native-ultimate-modal-picker';
 import Exercice from '../../components/Exercice';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import {Picker} from '@react-native-picker/picker';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import axios from 'axios';
 import {useIsFocused} from '@react-navigation/native';
@@ -90,11 +99,30 @@ export default ({props, navigation}) => {
           }}>
           Lista de Exercicíos
         </Text>
-        <DropdownList
-          title="Gesto Técnico"
-          items={gestos}
-          onChange={(item) => filterExercise(item)}
-        />
+        {Platform.OS === 'ios' && (
+          <DropdownList
+            title="Gesto Técnico"
+            items={gestos}
+            onChange={(item) => filterExercise(item)}
+          />
+        )}
+        {Platform.OS === 'android' && (
+          <>
+            <Text style={[styles.text, {marginLeft: 15}]}>Gesto:</Text>
+            <Picker
+              selectedValue={gesto}
+              style={{height: 50, width: 150}}
+              onValueChange={(itemValue, itemIndex) =>
+                filterExercise(itemValue)
+              }>
+              <Picker.Item label="Todos" value="Todos" />
+              <Picker.Item label="Passe" value="Passe" />
+              <Picker.Item label="Remate" value="Remate" />
+              <Picker.Item label="Serviço" value="Serviço" />
+              <Picker.Item label="Bloco" value="Bloco" />
+            </Picker>
+          </>
+        )}
         <View style={styles.lista}>
           <FlatList
             data={exercicios}
@@ -140,7 +168,7 @@ const styles = StyleSheet.create({
 
   lista: {
     //flex: 2,
-    height: '69%',
+    height: Dimensions.get('window').height * 0.5,
     marginBottom: 10,
   },
 

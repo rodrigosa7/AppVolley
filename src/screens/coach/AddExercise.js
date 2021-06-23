@@ -1,17 +1,21 @@
 import {
+  Alert,
   Image,
+  Platform,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 
-import { DropdownList } from 'react-native-ultimate-modal-picker';
+import {DropdownList} from 'react-native-ultimate-modal-picker';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import ImagePicker from 'react-native-image-crop-picker';
+import {Picker} from '@react-native-picker/picker';
 import axios from 'axios';
 
 export default ({props, route, navigation}) => {
@@ -29,6 +33,7 @@ export default ({props, route, navigation}) => {
   ];
 
   uploadExercise = () => {
+    console.log('OLA GESTO: ', gesto);
     var formData = new FormData();
     if (!descricao || !gesto || !nome || imagemsend == null) {
       Alert.alert('Erro', 'Existem campos em branco', [
@@ -84,60 +89,80 @@ export default ({props, route, navigation}) => {
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <Text style={styles.title1}>Criar exercicios</Text>
-      <Text style={[styles.text, {marginLeft: 15, marginBottom: 10}]}>
-        Nome:{''}
-      </Text>
-      <View style={styles.container}>
-        <TextInput
-          style={styles.input}
-          placeholder={'Nome'}
-          onChangeText={setNome}
-          value={nome}></TextInput>
-      </View>
-      <Text style={[styles.text, {marginLeft: 15, marginBottom: 10}]}>
-        Descrição:{''}
-      </Text>
-      <View style={styles.container}>
-        <TextInput
-          style={styles.input}
-          placeholder={'Descrição'}
-          onChangeText={setDescricao}
-          value={descricao}></TextInput>
-      </View>
-
-      <DropdownList
-        title="Gesto Técnico"
-        items={gestos}
-        onChange={(item) => setGesto(item)}
-      />
-
-      <View>
+      <ScrollView>
+        <Text style={styles.title1}>Criar exercicios</Text>
         <Text style={[styles.text, {marginLeft: 15, marginBottom: 10}]}>
-          Imagem do Esquema
+          Nome:{''}
         </Text>
-        {imagem != null && (
-          <View style={styles.img}>
-            <Image source={{uri: imagem}} style={{width: 250, height: 250}} />
-          </View>
+        <View style={styles.container}>
+          <TextInput
+            style={styles.input}
+            placeholder={'Nome'}
+            onChangeText={setNome}
+            value={nome}></TextInput>
+        </View>
+        <Text style={[styles.text, {marginLeft: 15, marginBottom: 10}]}>
+          Descrição:{''}
+        </Text>
+        <View style={styles.container}>
+          <TextInput
+            style={styles.input}
+            placeholder={'Descrição'}
+            onChangeText={setDescricao}
+            value={descricao}></TextInput>
+        </View>
+        {Platform.OS === 'ios' && (
+          <DropdownList
+            title="Gesto Técnico"
+            items={gestos}
+            onChange={(item) => {
+              console.log(item);
+              setGesto(item);
+            }}
+          />
         )}
-      </View>
-      <View style={styles.fim}>
-        <TouchableOpacity onPress={escolherFoto}>
-          <View style={styles.buttonImage}>
-            <Text style={styles.texto}>Escolher Imagem</Text>
-            <Icon style={styles.icone} name="image"></Icon>
-          </View>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.fim}>
-        <TouchableOpacity style={styles.botoes} onPress={uploadExercise}>
-          <View style={styles.button}>
-            <Text style={styles.texto}>Adicionar</Text>
-            <Icon style={styles.icone} name="check"></Icon>
-          </View>
-        </TouchableOpacity>
-      </View>
+        {Platform.OS === 'android' && (
+          <>
+            <Text style={[styles.text, {marginLeft: 15}]}>Gesto:</Text>
+            <Picker
+              selectedValue={gesto}
+              style={{height: 50, width: 150}}
+              onValueChange={(itemValue, itemIndex) => setGesto(itemValue)}>
+              <Picker.Item label="Passe" value="Passe" />
+              <Picker.Item label="Remate" value="Remate" />
+              <Picker.Item label="Serviço" value="Serviço" />
+              <Picker.Item label="Bloco" value="Bloco" />
+            </Picker>
+          </>
+        )}
+
+        <View>
+          <Text style={[styles.text, {marginLeft: 15, marginBottom: 10}]}>
+            Imagem do Esquema
+          </Text>
+          {imagem != null && (
+            <View style={styles.img}>
+              <Image source={{uri: imagem}} style={{width: 250, height: 250}} />
+            </View>
+          )}
+        </View>
+        <View style={styles.fim}>
+          <TouchableOpacity onPress={escolherFoto}>
+            <View style={styles.buttonImage}>
+              <Text style={styles.texto}>Escolher Imagem</Text>
+              <Icon style={styles.icone} name="image"></Icon>
+            </View>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.fim}>
+          <TouchableOpacity style={styles.botoes} onPress={uploadExercise}>
+            <View style={styles.button}>
+              <Text style={styles.texto}>Adicionar</Text>
+              <Icon style={styles.icone} name="check"></Icon>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -173,12 +198,7 @@ const styles = StyleSheet.create({
     color: '#333',
     fontSize: 18,
   },
-  botoes: {
-    position: 'absolute',
-    right: 0,
-    bottom: 0,
-    left: 0,
-  },
+
   button: {
     backgroundColor: '#080',
     marginTop: 10,
@@ -189,6 +209,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: 10,
   },
   buttonImage: {
     backgroundColor: '#da581e',

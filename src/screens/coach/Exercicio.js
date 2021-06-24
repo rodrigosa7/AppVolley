@@ -12,6 +12,7 @@ import React, {useEffect, useState} from 'react';
 import {DropdownList} from 'react-native-ultimate-modal-picker';
 import Exercice from '../../components/Exercice';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import ImagePicker from 'react-native-image-crop-picker';
 import {Picker} from '@react-native-picker/picker';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import axios from 'axios';

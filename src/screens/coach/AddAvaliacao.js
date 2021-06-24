@@ -1,106 +1,103 @@
-import React, {useEffect, useState} from 'react';
-import {SafeAreaView, SectionList, StyleSheet, Text, View} from 'react-native';
+import React, {useEffect, useState} from 'react'
+import {SafeAreaView, SectionList, StyleSheet, Text, View} from 'react-native'
 
-import axios from 'axios';
-import {useIsFocused} from '@react-navigation/native';
+import SelectMultiple from 'react-native-select-multiple'
+import axios from 'axios'
+import {useIsFocused} from '@react-navigation/native'
 
 export default ({props}) => {
-  const [criterioPasse, setCriterioPasse] = useState([]);
-  const [criterioRemate, setCriterioRemate] = useState([]);
-  const [criterioBloco, setCriterioBloco] = useState([]);
-  const [criterioServico, setCriterioServico] = useState([]);
-  const [promessas, setPromessas] = useState([]);
-  const [data, setData] = useState([]);
-  const [toggleCheckBox, setToggleCheckBox] = useState(false);
+  const [criterioPasse, setCriterioPasse] = useState([])
+  const [criterioRemate, setCriterioRemate] = useState([])
+  const [criterioBloco, setCriterioBloco] = useState([])
+  const [criterioServico, setCriterioServico] = useState([])
+  const [promessas, setPromessas] = useState([])
+  const [data, setData] = useState([])
+  const [toggleCheckBox, setToggleCheckBox] = useState(false)
 
-  const isFocused = useIsFocused();
+  const isFocused = useIsFocused()
 
   useEffect(() => {
-    promessas.push(
-      getInfo(
-        insereDados,
-        'http://volleyapi.sarapaiva.webtuga.net/Criterio/Passe',
-        criterioPasse,
-      ),
-    );
-    promessas.push(
-      getInfo(
-        insereDados,
-        'http://volleyapi.sarapaiva.webtuga.net/Criterio/Remate',
-        criterioRemate,
-      ),
-    );
-    promessas.push(
-      getInfo(
-        insereDados,
-        'http://volleyapi.sarapaiva.webtuga.net/Criterio/Bloco',
-        criterioBloco,
-      ),
-    );
-    promessas.push(
-      getInfo(
-        insereDados,
-        'http://volleyapi.sarapaiva.webtuga.net/Criterio/Serviço',
-        criterioServico,
-      ),
-    );
+    const promises = []
+    ;(async () => {
+      promises.push(
+        axios.get('http://volleyapi.sarapaiva.webtuga.net/Criterio/Passe'),
+      )
+      promises.push(
+        axios.get('http://volleyapi.sarapaiva.webtuga.net/Criterio/Remate'),
+      )
+      promises.push(
+        axios.get('http://volleyapi.sarapaiva.webtuga.net/Criterio/Bloco'),
+      )
+      promessas.push(
+        axios.get('http://volleyapi.sarapaiva.webtuga.net/Criterio/Serviço'),
+      )
 
-    Promise.all(promessas).then((values) => {
-      createList();
-    });
-  }, []);
+      try {
+        const [reqPasse, reqRemate, reqBloco, reqServico] = await Promise.all(
+          promises,
+        )
 
-  const insereDados = ([dados], array) => {
-    array.push(dados);
-  };
-  const getInfo = async (fun, url, array) => {
-    return await new Promise((resolve, reject) => {
-      axios
-        .get(url)
-        .then((result) => {
-          fun(result.data, array);
-
-          resolve();
-        })
-        .catch((error) => {
-          reject();
-        });
-    });
-  };
-
-  const createList = () => {
-    setData([
-      {
-        title: 'Passe',
-        data: criterioPasse,
-      },
-      {
-        title: 'Remate',
-        data: criterioRemate,
-      },
-      {title: 'Bloco', data: criterioBloco},
-      {title: 'Serviço', data: criterioServico},
-    ]);
-  };
-  const Criterio = (props) => (
-    <View style={styles.item}>
-      <Text style={styles.title}>{props.descricao}</Text>
-    </View>
-  );
+        setCriterioPasse(reqPasse.data)
+        setCriterioRemate(reqRemate.data)
+        setCriterioBloco(reqBloco.data)
+        setCriterioServico(reqServico.data)
+      } catch (err) {
+        console.log(err)
+      }
+    })()
+  }, [])
 
   return (
     <SafeAreaView>
       <Text>Lista de Critérios</Text>
-      <SectionList
-        sections={data}
-        keyExtractor={(item, index) => item + index}
-        renderItem={({item}) => <Criterio {...item} />}
-        renderSectionHeader={({section: {title}}) => (
-          <Text style={styles.header}>{title}</Text>
-        )}></SectionList>
+
+      <Text>Passe</Text>
+      {criterioPasse && (
+        <SelectMultiple
+          items={criterioPasse.map((item) => ({
+            label: item.descricao,
+            value: item.idCriterio,
+          }))}
+          selectedItems={[]}
+          onSelectionsChange={() => {}}
+        />
+      )}
+      <Text>Remate</Text>
+      {criterioRemate && (
+        <SelectMultiple
+          items={criterioRemate.map((item) => ({
+            label: item.descricao,
+            value: item.idCriterio,
+          }))}
+          selectedItems={[]}
+          onSelectionsChange={() => {}}
+        />
+      )}
+      <Text>Bloco</Text>
+      {criterioBloco && (
+        <SelectMultiple
+          items={criterioBloco.map((item) => ({
+            label: item.descricao,
+            value: item.idCriterio,
+          }))}
+          selectedItems={[]}
+          onSelectionsChange={() => {}}
+        />
+      )}
+      <Text>Serviço</Text>
+      {criterioServico && (
+        <SelectMultiple
+          items={criterioServico.map((item) => ({
+            label: item.descricao,
+            value: item.idCriterio,
+          }))}
+          selectedItems={[]}
+          onSelectionsChange={() => {}}
+        />
+      )}
     </SafeAreaView>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -119,4 +116,4 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
   },
-});
+})

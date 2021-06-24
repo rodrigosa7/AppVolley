@@ -1,60 +1,69 @@
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
 
+import ImagePicker from 'react-native-image-crop-picker';
 import {Picker} from '@react-native-picker/picker';
 import axios from 'axios';
 import {useIsFocused} from '@react-navigation/native';
+
+const GESTOS = [
+  {label: 'Passe', value: 'Passe'},
+  {label: 'Remate', value: 'Remate'},
+  {label: 'Serviço', value: 'Serviço'},
+  {label: 'Bloco', value: 'Bloco'},
+];
 
 export default (props, {navigation}) => {
   const [gesto, setGesto] = useState('Todos');
   const [exercicio, setExercicio] = useState(0);
   const [exercicios, setExercicios] = useState([]);
-  const gestos = [
-    {label: 'Passe', value: 'Passe'},
-    {label: 'Remate', value: 'Remate'},
-    {label: 'Serviço', value: 'Serviço'},
-    {label: 'Bloco', value: 'Bloco'},
-  ];
-
-  const isFocused = useIsFocused();
-
+  const [imagem, setImagem] = useState(null);
+  
   useEffect(() => {
-    isFocused && getExercicios();
-  }, [isFocused]);
-
-  getExercicios = async () => {
-    try {
-      const res = await axios.get(
-        `http://volleyapi.sarapaiva.webtuga.net/exercise`,
-      );
-      console.log(res.status);
-      setExercicios(res.data);
-    } catch (e) {
-      console.warn(e);
-      console.log(e);
-    }
-  };
-
-  filterExercise = async (tipoGesto) => {
-    if (tipoGesto == 'Todos') {
+    (async () => {
       try {
         const res = await axios.get(
           `http://volleyapi.sarapaiva.webtuga.net/exercise`,
         );
+        console.log('Exerciciso definidos');
         setExercicios(res.data);
       } catch (e) {
-        console.warn(e);
+        console.log(e);
       }
-    } else {
-      try {
-        const res = await axios.get(
-          `http://volleyapi.sarapaiva.webtuga.net/exercise/${tipoGesto}`,
-        );
-        setExercicios(res.data);
-      } catch (e) {
-        console.warn(e);
-      }
+    })();
+  }, []);
+
+  filterExercise = async (tipoGesto) => {
+    if (!tipoGesto) return;
+    try {
+      const res = await axios.get(
+        `http://volleyapi.sarapaiva.webtuga.net/exercise/${tipoGesto}`,
+      );
+      setExercicios(res.data);
+    } catch (e) {
+      console.warn(e);
     }
+  };
+  escolherFoto = () => {
+    ImagePicker.openPicker({
+      width: 300,
+      height: 400,
+      //cropping: true,
+    })
+      .then((image) => {
+        setImagem(image.path);
+        setImagemSend(image);
+      })
+      .catch((err) => {
+        setImagem(null);
+        //console.log(err);
+        Alert.alert('Erro', 'Nenhuma Imagem Selecionada', [
+          {
+            text: 'Confirmar',
+            style: 'cancel',
+          },
+        ]);
+      });
   };
   return (
     <SafeAreaView>
@@ -62,7 +71,7 @@ export default (props, {navigation}) => {
       {Platform.OS === 'ios' && (
         <DropdownList
           title="Gesto Técnico"
-          items={gestos}
+          items={GESTOS}
           onChange={(item) => {
             console.log(item);
             filterExercise(item);
@@ -89,7 +98,7 @@ export default (props, {navigation}) => {
           <Picker
             selectedValue={exercicio}
             style={{height: 50, width: 150}}
-            onValueChange={(itemValue, itemIndex) => filterExercise(itemValue)}>
+            onValueChange={(itemValue, itemIndex) => setExercicio(itemValue)}>
             {exercicios.map((item) => (
               <Picker.Item
                 key={item.idExercicio}

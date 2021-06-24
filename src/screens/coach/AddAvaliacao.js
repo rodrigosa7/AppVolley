@@ -10,7 +10,6 @@ export default ({props}) => {
   const [criterioRemate, setCriterioRemate] = useState([])
   const [criterioBloco, setCriterioBloco] = useState([])
   const [criterioServico, setCriterioServico] = useState([])
-  const [promessas, setPromessas] = useState([])
   const [data, setData] = useState([])
   const [toggleCheckBox, setToggleCheckBox] = useState(false)
 
@@ -28,7 +27,7 @@ export default ({props}) => {
       promises.push(
         axios.get('http://volleyapi.sarapaiva.webtuga.net/Criterio/Bloco'),
       )
-      promessas.push(
+      promises.push(
         axios.get('http://volleyapi.sarapaiva.webtuga.net/Criterio/Serviço'),
       )
 

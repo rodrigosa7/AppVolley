@@ -5,38 +5,38 @@ import {
   Text,
   TouchableOpacity,
   View,
-} from 'react-native';
-import React, {useEffect, useState} from 'react';
+} from 'react-native'
+import React, {useEffect, useState} from 'react'
 
-import Avaliacao from '../../components/Avaliacao';
-import Icon from 'react-native-vector-icons/FontAwesome5';
-import axios from 'axios';
-import {server} from '../../common';
-import {useIsFocused} from '@react-navigation/native';
+import Avaliacao from '../../components/Avaliacao'
+import Icon from 'react-native-vector-icons/FontAwesome5'
+import axios from 'axios'
+import {server} from '../../common'
+import {useIsFocused} from '@react-navigation/native'
 
 export default ({route, navigation}) => {
-  const [avaliacao, setAvaliacao] = useState([]);
+  const [avaliacao, setAvaliacao] = useState([])
 
-  const isFocused = useIsFocused();
-  const id = route.params.item.idAthlete;
+  const isFocused = useIsFocused()
+  const id = route.params.item.idAthlete
   useEffect(() => {
-    isFocused && getAvaliacao();
-  }, [isFocused]);
+    isFocused && getAvaliacao()
+  }, [isFocused])
 
   const getAvaliacao = async () => {
     try {
-      const res = await axios.get(`${server}/avaliacao/${id}`);
-      setAvaliacao(res.data);
+      const res = await axios.get(`${server}/avaliacao/${id}`)
+      setAvaliacao(res.data)
     } catch (e) {
-      console.warn(e);
+      console.warn(e)
     }
-  };
+  }
   const addAvaliacao = () => {
-    navigation.navigate('AddAvaliacao', {id});
-  };
+    navigation.navigate('AddAvaliacao', {id})
+  }
   const addVideo = () => {
-    navigation.navigate('UploadVideo');
-  };
+    navigation.navigate('UploadVideo', {id})
+  }
 
   return (
     <SafeAreaView>
@@ -70,8 +70,8 @@ export default ({route, navigation}) => {
         </TouchableOpacity>
       </View>
     </SafeAreaView>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   lista: {
@@ -101,4 +101,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-});
+})

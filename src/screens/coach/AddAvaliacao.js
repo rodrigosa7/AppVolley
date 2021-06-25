@@ -1,5 +1,12 @@
+import {
+  Button,
+  SafeAreaView,
+  SectionList,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native'
 import React, {useEffect, useState} from 'react'
-import {SafeAreaView, SectionList, StyleSheet, Text, View} from 'react-native'
 
 import SelectMultiple from 'react-native-select-multiple'
 import axios from 'axios'
@@ -10,6 +17,13 @@ export default ({props}) => {
   const [criterioRemate, setCriterioRemate] = useState([])
   const [criterioBloco, setCriterioBloco] = useState([])
   const [criterioServico, setCriterioServico] = useState([])
+  const [criterioPasseSelecionado, setCriterioPasseSelecionado] = useState([])
+  const [criterioRemateSelecionado, setCriterioRemateSelecionado] = useState([])
+  const [criterioBlocoSelecionado, setCriterioBlocoSelecionado] = useState([])
+  const [criterioServicoSelecionado, setCriterioServicoSelecionado] = useState(
+    [],
+  )
+
   const [data, setData] = useState([])
   const [toggleCheckBox, setToggleCheckBox] = useState(false)
 
@@ -57,8 +71,10 @@ export default ({props}) => {
             label: item.descricao,
             value: item.idCriterio,
           }))}
-          selectedItems={[]}
-          onSelectionsChange={() => {}}
+          selectedItems={criterioPasseSelecionado}
+          onSelectionsChange={(selectedItems) =>
+            setCriterioPasseSelecionado(selectedItems)
+          }
         />
       )}
       <Text>Remate</Text>
@@ -68,8 +84,10 @@ export default ({props}) => {
             label: item.descricao,
             value: item.idCriterio,
           }))}
-          selectedItems={[]}
-          onSelectionsChange={() => {}}
+          selectedItems={criterioRemateSelecionado}
+          onSelectionsChange={(selectedItems) =>
+            setCriterioRemateSelecionado(selectedItems)
+          }
         />
       )}
       <Text>Bloco</Text>
@@ -79,8 +97,10 @@ export default ({props}) => {
             label: item.descricao,
             value: item.idCriterio,
           }))}
-          selectedItems={[]}
-          onSelectionsChange={() => {}}
+          selectedItems={criterioBlocoSelecionado}
+          onSelectionsChange={(selectedItems) =>
+            setCriterioBlocoSelecionado(selectedItems)
+          }
         />
       )}
       <Text>Serviço</Text>
@@ -90,10 +110,13 @@ export default ({props}) => {
             label: item.descricao,
             value: item.idCriterio,
           }))}
-          selectedItems={[]}
-          onSelectionsChange={() => {}}
+          selectedItems={criterioServicoSelecionado}
+          onSelectionsChange={(selectedItems) =>
+            setCriterioServicoSelecionado(selectedItems)
+          }
         />
       )}
+      
     </SafeAreaView>
   )
 }
@@ -115,4 +138,5 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
   },
+  
 })

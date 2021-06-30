@@ -9,48 +9,48 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-} from 'react-native';
-import React, {useState} from 'react';
+} from 'react-native'
+import React, {useState} from 'react'
 
-import {DropdownList} from 'react-native-ultimate-modal-picker';
-import Icon from 'react-native-vector-icons/FontAwesome5';
-import ImagePicker from 'react-native-image-crop-picker';
-import {Picker} from '@react-native-picker/picker';
-import axios from 'axios';
+import {DropdownList} from 'react-native-ultimate-modal-picker'
+import Icon from 'react-native-vector-icons/FontAwesome5'
+import ImagePicker from 'react-native-image-crop-picker'
+import {Picker} from '@react-native-picker/picker'
+import axios from 'axios'
 
 export default ({props, route, navigation}) => {
-  const [descricao, setDescricao] = useState('');
-  const [nome, setNome] = useState('');
-  const [gesto, setGesto] = useState('');
-  const [imagem, setImagem] = useState(null);
-  const [imagemsend, setImagemSend] = useState(null);
+  const [descricao, setDescricao] = useState('')
+  const [nome, setNome] = useState('')
+  const [gesto, setGesto] = useState('')
+  const [imagem, setImagem] = useState(null)
+  const [imagemsend, setImagemSend] = useState(null)
 
   const gestos = [
     {label: 'Passe', value: 'Passe'},
     {label: 'Remate', value: 'Remate'},
     {label: 'Serviço', value: 'Serviço'},
     {label: 'Bloco', value: 'Bloco'},
-  ];
+  ]
 
   uploadExercise = () => {
-    var formData = new FormData();
+    var formData = new FormData()
     if (!descricao || !gesto || !nome || imagemsend == null) {
       Alert.alert('Erro', 'Existem campos em branco', [
         {
           text: 'Confirmar',
           style: 'cancel',
         },
-      ]);
+      ])
     } else {
-      formData.append('nome', nome);
-      formData.append('desc', descricao);
-      formData.append('gesto', gesto);
+      formData.append('nome', nome)
+      formData.append('desc', descricao)
+      formData.append('gesto', gesto)
 
       formData.append('foto', {
         name: 'upload',
         type: imagemsend.mime,
         uri: Platform.OS === 'android' ? imagemsend.path : imagemsend.path,
-      });
+      })
 
       axios({
         method: 'post',
@@ -60,10 +60,10 @@ export default ({props, route, navigation}) => {
         },
         data: formData,
       }).then(() => {
-        navigation.goBack();
-      });
+        navigation.goBack()
+      })
     }
-  };
+  }
   escolherFoto = () => {
     ImagePicker.openPicker({
       width: 300,
@@ -71,20 +71,20 @@ export default ({props, route, navigation}) => {
       //cropping: true,
     })
       .then((image) => {
-        setImagem(image.path);
-        setImagemSend(image);
+        setImagem(image.path)
+        setImagemSend(image)
       })
       .catch((err) => {
-        setImagem(null);
+        setImagem(null)
         //console.log(err);
         Alert.alert('Erro', 'Nenhuma Imagem Selecionada', [
           {
             text: 'Confirmar',
             style: 'cancel',
           },
-        ]);
-      });
-  };
+        ])
+      })
+  }
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -115,8 +115,8 @@ export default ({props, route, navigation}) => {
             title="Gesto Técnico"
             items={gestos}
             onChange={(item) => {
-              console.log(item);
-              setGesto(item);
+              console.log(item)
+              setGesto(item)
             }}
           />
         )}
@@ -163,8 +163,8 @@ export default ({props, route, navigation}) => {
         </View>
       </ScrollView>
     </SafeAreaView>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -225,4 +225,4 @@ const styles = StyleSheet.create({
   icone: {
     marginLeft: 10,
   },
-});
+})

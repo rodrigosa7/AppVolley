@@ -11,6 +11,8 @@ target 'VCV' do
   pod 'DateTimePicker'
 #v
 
+  pod 'react-native-video', :path => '../node_modules/react-native-video'
+
   target 'VCVTests' do
     inherit! :complete
     # Pods for testing

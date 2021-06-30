@@ -1,11 +1,18 @@
-import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native'
+import {
+  FlatList,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import React, {useEffect, useState} from 'react'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Atleta from '../../components/Atleta'
 import axios from 'axios'
 
-export default ({}) => {
+export default ({navigation}) => {
   const [filhos, setFilhos] = useState([])
 
   useEffect(() => {
@@ -14,14 +21,12 @@ export default ({}) => {
         const userDataJson = await AsyncStorage.getItem('userData')
         let userData = null
         userData = JSON.parse(userDataJson)
-        console.log(userData)
 
         const req = await axios.get(
           `http://volleyapi.sarapaiva.webtuga.net/atleta/${userData.id}`,
         )
 
         setFilhos(req.data)
-        console.log(req.data)
       } catch (e) {
         console.log(e)
       }
@@ -29,20 +34,21 @@ export default ({}) => {
   }, [])
 
   return (
-    <View>
-      <Text>OLA</Text>
+    <SafeAreaView>
+      <Text style={styles.title}>Educandos</Text>
       <View style={styles.lista}>
         <FlatList
           data={filhos}
           keyExtractor={(item) => `${item.idAthlete}`}
           renderItem={({item}) => (
-            <TouchableOpacity onPress={() => {}}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('InfoChild', {item})}>
               <Atleta {...item} />
             </TouchableOpacity>
           )}
         />
       </View>
-    </View>
+    </SafeAreaView>
   )
 }
 

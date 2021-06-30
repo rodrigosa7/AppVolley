@@ -1,11 +1,18 @@
 import {StyleSheet, Text, View} from 'react-native'
 
 import React from 'react'
+import moment from 'moment'
 
 export default (props) => {
+  console.log('pROPPIES', props)
   return (
     <View style={styles.container}>
-      <Text style={styles.desc}>{props.Score}</Text>
+      <Text style={styles.desc}>Local: {props.local}</Text>
+      <Text style={styles.desc}>Tipo: {props.Tipo}</Text>
+      <Text style={styles.desc}>
+        Hora:
+        {moment.unix(props.ev_inicio).locale('pt').format('DD-MM-YYYY HH:mm')}
+      </Text>
     </View>
   )
 }
@@ -19,10 +26,11 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     marginBottom: 10,
     backgroundColor: '#da581e',
+    display: 'flex',
     width: '90%',
+    flexDirection: 'column',
   },
   desc: {
-    marginLeft: 20,
     color: '#000',
   },
 })

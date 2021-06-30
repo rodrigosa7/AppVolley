@@ -9,11 +9,16 @@ import {
 import React, {useState} from 'react';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-//import commonStyles from '../commonStyles';
 import AuthInput from '../components/AuthInput';
 import {CommonActions} from '@react-navigation/native';
 import axios from 'axios';
 import backgroundImage from '../../assets/login.jpg';
+
+//import commonStyles from '../commonStyles';
+
+
+
+
 
 export default (props) => {
   //const [state, setState] = useState(initialState);
@@ -53,6 +58,7 @@ export default (props) => {
           password: password,
         },
       );
+      console.log('DATA', res.data)
       AsyncStorage.setItem('userData', JSON.stringify(res.data));
       //console.log(res.data);
       if (res.data.status) {

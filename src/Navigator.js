@@ -13,8 +13,10 @@ import AddAvaliacao from './screens/coach/AddAvaliacao'
 import AddExercise from './screens/coach/AddExercise'
 import Atletas from './screens/coach/Athelets'
 import Auth from './screens/Auth'
+import Child from './screens/parent/Child'
 import Children from './screens/parent/Children'
 import CreateEvent from './screens/coach/CreateEvent'
+import Exercice from './screens/parent/Exercice'
 import ExerciceInfo from './screens/coach/ExerciceInfo'
 import Exercicio from './screens/coach/Exercicio'
 import Home from './screens/coach/Home'
@@ -99,6 +101,24 @@ const AuthNavigator = () => {
       <Stack.Screen
         name="UploadVideo"
         component={UploadVideo}
+        options={{
+          headerShown: true,
+          headerTitle: null,
+          headerBackTitle: 'Back',
+        }}
+      />
+      <Stack.Screen
+        name="InfoChild"
+        component={Child}
+        options={{
+          headerShown: true,
+          headerTitle: null,
+          headerBackTitle: 'Back',
+        }}
+      />
+      <Stack.Screen
+        name="Exercice"
+        component={Exercice}
         options={{
           headerShown: true,
           headerTitle: null,

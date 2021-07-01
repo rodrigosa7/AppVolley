@@ -2,6 +2,8 @@ import 'moment/locale/pt'
 
 import {
   Button,
+  SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -12,8 +14,10 @@ import React, {useEffect, useState} from 'react'
 
 import DatePicker from 'react-native-date-picker'
 import DateTimePicker from '@react-native-community/datetimepicker'
+import Icon from 'react-native-vector-icons/FontAwesome5'
 import {Picker} from '@react-native-picker/picker'
 import axios from 'axios'
+import globalStyles from '../../styles'
 import moment from 'moment'
 import {server} from '../../common'
 
@@ -132,131 +136,196 @@ export default (props) => {
     return <Text>{hora}</Text>
   }
   return (
-    <View>
-      <Text style={styles.title}>Criar um evento</Text>
-      {Platform.OS === 'ios' && (
-        <DropdownList
-          title="Gesto Técnico"
-          items={gestos}
-          onChange={(item) => {
-            console.log(item)
-            setGesto(item)
-          }}
-        />
-      )}
-      {Platform.OS === 'android' && (
-        <>
-          <Text style={[styles.text, {marginLeft: 15}]}>Evento:</Text>
-          <Picker
-            selectedValue={evento}
-            style={{height: 50, width: 150}}
-            mode="dropdown"
-            onValueChange={(itemValue) => setEvento(itemValue)}>
-            <Picker.Item label="Jogo" value="Jogo" />
-            <Picker.Item label="Treino" value="Treino" />
-            <Picker.Item label="Treino Individual" value="Treino Individual" />
-          </Picker>
-        </>
-      )}
-      <View>
-        <Text>Data: {formatDate(date)}</Text>
-        <Button onPress={showDatePicker} title="Data"></Button>
-        <Text>Ínicio: {formatHour(timeStart)}</Text>
-        <Button onPress={showTimeStartPicker} title="Hora de Inicio" />
-        <Text>Fim: {formatHour(timeEnd)}</Text>
-        <Button onPress={showTimeEndPicker} title="Hora de Fim" />
-      </View>
+    <SafeAreaView>
+      <ScrollView>
+        <View style={globalStyles.header}>
+          <Text style={globalStyles.title}>Criar um evento</Text>
+        </View>
 
-      {showDate && (
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={date}
-          mode={modeDate}
-          is24Hour={true}
-          display="default"
-          onChange={onChangeDate}
-        />
-      )}
+        <View style={globalStyles.content}>
+          <View style={globalStyles.form.group}>
+            {Platform.OS === 'ios' && (
+              <DropdownList
+                title="Evento"
+                items={[
+                  {label: 'Jogo', value: 'Jogo'},
+                  {label: 'Treino', value: 'Treino'},
+                  {label: 'Treino Individual', value: 'Treino Individual'},
+                ]}
+                onChange={(item) => {
+                  console.log(item)
+                  setEvento(item)
+                }}
+              />
+            )}
+            {Platform.OS === 'android' && (
+              <>
+                <Text style={globalStyles.form.label}>Evento:</Text>
+                <View style={globalStyles.form.pickerArea}>
+                  <Picker
+                    selectedValue={evento}
+                    style={globalStyles.form.pickerInput}
+                    mode="dropdown"
+                    onValueChange={(itemValue) => setEvento(itemValue)}>
+                    <Picker.Item label="Jogo" value="Jogo" />
+                    <Picker.Item label="Treino" value="Treino" />
+                    <Picker.Item
+                      label="Treino Individual"
+                      value="Treino Individual"
+                    />
+                  </Picker>
+                </View>
+              </>
+            )}
+          </View>
 
-      {showTimeStart && (
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={timeStart}
-          mode={modeTimeStart}
-          is24Hour={true}
-          display="default"
-          onChange={onChangeTimeStart}
-        />
-      )}
-      {showTimeEnd && (
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={timeEnd}
-          mode={modeTimeEnd}
-          is24Hour={true}
-          display="default"
-          onChange={onChangeTimeEnd}
-        />
-      )}
+          <View style={globalStyles.form.group2}>
+            <Text style={globalStyles.form.label}>Data:</Text>
+            <View style={localStyles.sublabelview}>
+              <Text style={localStyles.sublabel}>{formatDate(date)}</Text>
+            </View>
 
-      <Text>Turma</Text>
-      {Platform.OS === 'android' && (
-        <Picker
-          selectedValue={turma}
-          onValueChange={(itemValue) => setTurma(itemValue)}
-          mode="dropdown">
-          {turmas.map((turma) => (
-            <Picker.Item
-              key={turma.idTeam}
-              label={turma.NameT}
-              value={turma.idTeam}
+            <TouchableOpacity
+              style={globalStyles.form.buttonSelect}
+              onPress={showDatePicker}>
+              <Text style={globalStyles.form.buttonSelectText}>
+                Escolher Data
+              </Text>
+              <Icon style={globalStyles.form.icon} name="calendar-alt"></Icon>
+            </TouchableOpacity>
+          </View>
+
+          <View style={globalStyles.form.group2}>
+            <Text style={globalStyles.form.label}>Ínicio:</Text>
+
+            <View style={localStyles.sublabelview}>
+              <Text style={localStyles.sublabel}>{formatHour(timeStart)}</Text>
+            </View>
+
+            <TouchableOpacity
+              style={globalStyles.form.buttonSelect}
+              onPress={showTimeStartPicker}>
+              <Text style={globalStyles.form.buttonSelectText}>
+                Escolher Hora de Inicio
+              </Text>
+              <Icon style={globalStyles.form.icon} name="clock"></Icon>
+            </TouchableOpacity>
+          </View>
+
+          <View style={globalStyles.form.group2}>
+            <Text style={globalStyles.form.label}>Fim:</Text>
+            <View style={localStyles.sublabelview}>
+              <Text style={localStyles.sublabel}>{formatHour(timeEnd)}</Text>
+            </View>
+
+            <TouchableOpacity
+              style={globalStyles.form.buttonSelect}
+              onPress={showTimeEndPicker}>
+              <Text style={globalStyles.form.buttonSelectText}>
+                Escolher Hora de Fim
+              </Text>
+              <Icon style={globalStyles.form.icon} name="clock"></Icon>
+            </TouchableOpacity>
+          </View>
+
+          {showDate && (
+            <DateTimePicker
+              testID="dateTimePicker"
+              value={date}
+              mode={modeDate}
+              is24Hour={true}
+              display="default"
+              onChange={onChangeDate}
             />
-          ))}
-        </Picker>
-      )}
-      {Platform.OS === 'ios' && (
-        <DropdownList
-          title="Gesto"
-          items={turmas.map((turma) => ({
-            label: turma.NameT,
-            value: turma.idTeam,
-          }))}
-          onChange={(item) => {
-            console.log(item)
-            setGesto(item)
-          }}
-        />
-      )}
-      <View style={styles.container}>
-        <TextInput
-          style={styles.input}
-          placeholder={'Local'}
-          onChangeText={setLocal}
-          value={local}></TextInput>
-      </View>
-      <Button onPress={createEvent} title="Guardar" />
-    </View>
+          )}
+
+          {showTimeStart && (
+            <DateTimePicker
+              testID="dateTimePicker"
+              value={timeStart}
+              mode={modeTimeStart}
+              is24Hour={true}
+              display="default"
+              onChange={onChangeTimeStart}
+            />
+          )}
+          {showTimeEnd && (
+            <DateTimePicker
+              testID="dateTimePicker"
+              value={timeEnd}
+              mode={modeTimeEnd}
+              is24Hour={true}
+              display="default"
+              onChange={onChangeTimeEnd}
+            />
+          )}
+          <View style={globalStyles.form.group}>
+            <Text style={globalStyles.form.label}>Turma: </Text>
+
+            <View style={globalStyles.form.pickerArea}>
+              {Platform.OS === 'android' && (
+                <Picker
+                  selectedValue={turma}
+                  onValueChange={(itemValue) => setTurma(itemValue)}
+                  style={globalStyles.form.pickerInput}
+                  mode="dropdown">
+                  {turmas.map((turma) => (
+                    <Picker.Item
+                      key={turma.idTeam}
+                      label={turma.NameT}
+                      value={turma.idTeam}
+                    />
+                  ))}
+                </Picker>
+              )}
+              {Platform.OS === 'ios' && (
+                <DropdownList
+                  title="Gesto"
+                  items={turmas.map((turma) => ({
+                    label: turma.NameT,
+                    value: turma.idTeam,
+                  }))}
+                  onChange={(item) => {
+                    console.log(item)
+                    setGesto(item)
+                  }}
+                />
+              )}
+            </View>
+          </View>
+
+          <View style={globalStyles.form.group}>
+            <Text style={globalStyles.form.label}>Local: </Text>
+            <TextInput
+              style={globalStyles.form.textInput}
+              placeholder="Local"
+              onChangeText={setLocal}
+              value={local}
+            />
+          </View>
+
+          <TouchableOpacity
+            style={globalStyles.form.button}
+            onPress={createEvent}>
+            <Text style={globalStyles.form.buttonText}>Guardar</Text>
+            <Icon style={globalStyles.form.formIcon} name="check"></Icon>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   )
 }
 
-const styles = StyleSheet.create({
-  title: {
-    marginTop: 15,
-    textAlign: 'center',
-    fontSize: 30,
-  },
-  container: {
-    backgroundColor: '#FFF',
-    borderRadius: 20,
+const localStyles = {
+  sublabelview: {
     flexDirection: 'row',
     alignItems: 'center',
-    alignSelf: 'center',
-    width: '90%',
-    marginBottom: 10,
   },
-  input: {
-    height: 40,
-    marginLeft: 20,
-    width: '50%',
+  sublabel: {
+    marginLeft: 15,
+    fontWeight: 'normal',
+    borderBottomColor: 'black',
+    borderBottomWidth: 2,
+    borderStyle: 'solid',
   },
-})
+}

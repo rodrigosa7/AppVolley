@@ -103,6 +103,7 @@ export default ({props, route, navigation}) => {
         <Text style={[styles.text, {marginLeft: 15, marginBottom: 10}]}>
           Descrição:{''}
         </Text>
+        
         <View style={styles.container}>
           <TextInput
             style={styles.input}

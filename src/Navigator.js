@@ -97,7 +97,15 @@ const AuthNavigator = () => {
           headerBackTitle: 'Back',
         }}
       />
-      <Stack.Screen name="AddExercise" component={AddExercise} />
+      <Stack.Screen
+        name="AddExercise"
+        component={AddExercise}
+        options={{
+          headerShown: true,
+          headerTitle: null,
+          headerBackTitle: 'Back',
+        }}
+      />
       <Stack.Screen
         name="UploadVideo"
         component={UploadVideo}

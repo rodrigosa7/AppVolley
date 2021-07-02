@@ -17,6 +17,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5'
 import ImagePicker from 'react-native-image-crop-picker'
 import {Picker} from '@react-native-picker/picker'
 import axios from 'axios'
+import globalStyles from '../../styles'
 
 export default ({props, route, navigation}) => {
   const [descricao, setDescricao] = useState('')
@@ -89,78 +90,82 @@ export default ({props, route, navigation}) => {
   return (
     <SafeAreaView style={{flex: 1}}>
       <ScrollView>
-        <Text style={styles.title1}>Criar exercicios</Text>
-        <Text style={[styles.text, {marginLeft: 15, marginBottom: 10}]}>
-          Nome:{''}
-        </Text>
-        <View style={styles.container}>
-          <TextInput
-            style={styles.input}
-            placeholder={'Nome'}
-            onChangeText={setNome}
-            value={nome}></TextInput>
-        </View>
-        <Text style={[styles.text, {marginLeft: 15, marginBottom: 10}]}>
-          Descrição:{''}
-        </Text>
-        
-        <View style={styles.container}>
-          <TextInput
-            style={styles.input}
-            placeholder={'Descrição'}
-            onChangeText={setDescricao}
-            value={descricao}></TextInput>
-        </View>
-        {Platform.OS === 'ios' && (
-          <DropdownList
-            title="Gesto Técnico"
-            items={gestos}
-            onChange={(item) => {
-              console.log(item)
-              setGesto(item)
-            }}
-          />
-        )}
-        {Platform.OS === 'android' && (
-          <>
-            <Text style={[styles.text, {marginLeft: 15}]}>Gesto:</Text>
-            <Picker
-              selectedValue={gesto}
-              style={{height: 50, width: 150}}
-              onValueChange={(itemValue, itemIndex) => setGesto(itemValue)}>
-              <Picker.Item label="Passe" value="Passe" />
-              <Picker.Item label="Remate" value="Remate" />
-              <Picker.Item label="Serviço" value="Serviço" />
-              <Picker.Item label="Bloco" value="Bloco" />
-            </Picker>
-          </>
-        )}
+        <Text style={globalStyles.title}>Criar exercicios</Text>
+        <View style={globalStyles.content}>
+          <View style={globalStyles.form.group}>
+            <Text style={globalStyles.form.label}>Nome:{''}</Text>
 
-        <View>
-          <Text style={[styles.text, {marginLeft: 15, marginBottom: 10}]}>
-            Imagem do Esquema
-          </Text>
-          {imagem != null && (
-            <View style={styles.img}>
-              <Image source={{uri: imagem}} style={{width: 250, height: 250}} />
+            <TextInput
+              style={globalStyles.form.textInput}
+              placeholder={'Nome'}
+              onChangeText={setNome}
+              value={nome}></TextInput>
+          </View>
+          <View style={globalStyles.form.group}>
+            <Text style={globalStyles.form.label}>Descrição:{''}</Text>
+            <TextInput
+              style={globalStyles.form.textInput}
+              placeholder={'Descrição'}
+              onChangeText={setDescricao}
+              value={descricao}></TextInput>
+          </View>
+
+          {Platform.OS === 'ios' && (
+            <DropdownList
+              title="Gesto Técnico"
+              items={gestos}
+              onChange={(item) => {
+                console.log(item)
+                setGesto(item)
+              }}
+            />
+          )}
+          {Platform.OS === 'android' && (
+            <View style={globalStyles.form.group}>
+              <Text style={globalStyles.form.label}>Gesto:</Text>
+              <View style={globalStyles.form.pickerArea}>
+                <Picker
+                  selectedValue={gesto}
+                  style={globalStyles.form.pickerInput}
+                  onValueChange={(itemValue, itemIndex) => setGesto(itemValue)}>
+                  <Picker.Item label="Passe" value="Passe" />
+                  <Picker.Item label="Remate" value="Remate" />
+                  <Picker.Item label="Serviço" value="Serviço" />
+                  <Picker.Item label="Bloco" value="Bloco" />
+                </Picker>
+              </View>
             </View>
           )}
-        </View>
-        <View style={styles.fim}>
-          <TouchableOpacity onPress={escolherFoto}>
-            <View style={styles.buttonImage}>
-              <Text style={styles.texto}>Escolher Imagem</Text>
-              <Icon style={styles.icone} name="image"></Icon>
-            </View>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.fim}>
-          <TouchableOpacity style={styles.botoes} onPress={uploadExercise}>
-            <View style={styles.button}>
-              <Text style={styles.texto}>Adicionar</Text>
-              <Icon style={styles.icone} name="check"></Icon>
-            </View>
-          </TouchableOpacity>
+
+          <View style={globalStyles.form.group}>
+            <Text style={globalStyles.form.label}>Imagem do Esquema:</Text>
+            {imagem != null && (
+              <View style={styles.img}>
+                <Image
+                  source={{uri: imagem}}
+                  style={{width: 250, height: 250}}
+                />
+              </View>
+            )}
+          </View>
+          <View style={globalStyles.form.group}>
+            <TouchableOpacity
+              onPress={escolherFoto}
+              style={globalStyles.form.buttonSelect}>
+              <Text style={globalStyles.form.buttonSelectText2}>
+                Escolher Imagem
+              </Text>
+              <Icon style={globalStyles.form.icon2} name="image"></Icon>
+            </TouchableOpacity>
+          </View>
+          <View style={globalStyles.form.group}>
+            <TouchableOpacity
+              style={globalStyles.form.button}
+              onPress={uploadExercise}>
+              <Text style={globalStyles.form.buttonText}>Adicionar</Text>
+              <Icon style={globalStyles.form.formIcon} name="check"></Icon>
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -168,62 +173,9 @@ export default ({props, route, navigation}) => {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#FFF',
-    borderRadius: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
-    alignSelf: 'center',
-    width: '90%',
-    marginBottom: 10,
-  },
-  input: {
-    height: 40,
-    marginLeft: 20,
-    width: '50%',
-  },
-  title1: {
-    fontWeight: 'bold',
-    color: '#ff6600',
-    fontSize: 30,
-    marginTop: 20,
-    marginLeft: 15,
-    marginBottom: 15,
-  },
   img: {
+    marginTop: 10,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  text: {
-    color: '#333',
-    fontSize: 18,
-  },
-
-  button: {
-    backgroundColor: '#080',
-    marginTop: 10,
-    padding: 10,
-    flexDirection: 'row',
-    width: '40%',
-    borderRadius: 7,
-    alignSelf: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 10,
-  },
-  buttonImage: {
-    backgroundColor: '#da581e',
-    marginTop: 10,
-    padding: 10,
-    flexDirection: 'row',
-    borderRadius: 7,
-    alignSelf: 'center',
-    alignItems: 'center',
-  },
-  fim: {
-    flex: 1,
-  },
-  icone: {
-    marginLeft: 10,
   },
 })

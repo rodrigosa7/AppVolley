@@ -11,6 +11,7 @@ import React, {useEffect, useState} from 'react'
 import Avaliacao from '../../components/Avaliacao'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import axios from 'axios'
+import globalStyles from '../../styles'
 import {server} from '../../common'
 import {useIsFocused} from '@react-navigation/native'
 
@@ -40,34 +41,44 @@ export default ({route, navigation}) => {
 
   return (
     <SafeAreaView>
-      <Text style={styles.title}>Lista de Avaliações</Text>
-      <View style={styles.lista}>
-        <FlatList
-          data={avaliacao}
-          keyExtractor={(item) => `${item.idAthlete_Evaluation}`}
-          renderItem={({item}) => (
-            <TouchableOpacity
-              onPress={() => navigation.navigate('InfoExercicio', {item})}>
-              <Avaliacao {...item} />
-            </TouchableOpacity>
+      <View style={{flexDirection: 'column', height: '100%'}}>
+        <Text style={globalStyles.title}>Lista de Avaliações</Text>
+        <View style={globalStyles.content}>
+          {avaliacao.length <= 0 ? (
+            <Text>Não existem avaliações para este atleta </Text>
+          ) : (
+            <FlatList
+              data={avaliacao}
+              keyExtractor={(item) => `${item.idAthlete_Evaluation}`}
+              renderItem={({item}) => (
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('InfoExercicio', {item})}>
+                  <Avaliacao {...item} />
+                </TouchableOpacity>
+              )}
+            />
           )}
-        />
-      </View>
-      <View style={styles.fim}>
-        <TouchableOpacity onPress={addAvaliacao}>
-          <View style={styles.button}>
-            <Text style={[styles.texto, {marginBottom: 5}]}>
-              Nova Avaliação
-            </Text>
-            <Icon name="calendar-check"></Icon>
+          <View>
+            <TouchableOpacity
+              onPress={addAvaliacao}
+              style={globalStyles.form.buttonSelect}>
+              <Text style={globalStyles.form.buttonSelectText2}>
+                Nova Avaliação
+              </Text>
+              <Icon
+                name="calendar-check"
+                style={globalStyles.form.icon2}></Icon>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={addVideo}
+              style={globalStyles.form.buttonSelect}>
+              <Text style={globalStyles.form.buttonSelectText2}>
+                Upload Vídeo
+              </Text>
+              <Icon name="video" style={globalStyles.form.icon2}></Icon>
+            </TouchableOpacity>
           </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={addVideo}>
-          <View style={[styles.button, {marginLeft: 5}]}>
-            <Text style={[styles.texto, {marginBottom: 5}]}>Upload Vídeo</Text>
-            <Icon name="video"></Icon>
-          </View>
-        </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   )
@@ -94,11 +105,5 @@ const styles = StyleSheet.create({
     //width: '50%',
     alignSelf: 'center',
     alignItems: 'center',
-  },
-  fim: {
-    flexDirection: 'row',
-    position: 'relative',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 })

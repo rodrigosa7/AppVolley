@@ -1,28 +1,19 @@
-import {
-  Dimensions,
-  FlatList,
-  Platform,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import {FlatList, Platform, SafeAreaView, Text, View} from 'react-native'
+import React, {useEffect, useState} from 'react'
 
-import {DropdownList} from 'react-native-ultimate-modal-picker';
-import Exercice from '../../components/Exercice';
-import Icon from 'react-native-vector-icons/FontAwesome5';
-import ImagePicker from 'react-native-image-crop-picker';
-import {Picker} from '@react-native-picker/picker';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import axios from 'axios';
-import {useIsFocused} from '@react-navigation/native';
+import {DropdownList} from 'react-native-ultimate-modal-picker'
+import Exercice from '../../components/Exercice'
+import Icon from 'react-native-vector-icons/FontAwesome5'
+import IconBar from '../../components/IconBar'
+import {Picker} from '@react-native-picker/picker'
+import {TouchableOpacity} from 'react-native-gesture-handler'
+import axios from 'axios'
+import globalStyles from '../../styles'
+import {useIsFocused} from '@react-navigation/native'
 
 export default ({props, navigation}) => {
-  const [gesto, setGesto] = useState('');
-  const [exercicios, setExercicios] = useState([]);
-  const [count, setCount] = useState(0);
-  const [state, setState] = useState({});
+  const [gesto, setGesto] = useState('')
+  const [exercicios, setExercicios] = useState([])
 
   const gestos = [
     {label: 'Todos', value: 'Todos'},
@@ -30,158 +21,108 @@ export default ({props, navigation}) => {
     {label: 'Remate', value: 'Remate'},
     {label: 'Serviço', value: 'Serviço'},
     {label: 'Bloco', value: 'Bloco'},
-  ];
-  /*
-  useEffect(() => {
-    getExercicios();
-  }, []);
-*/
-  const isFocused = useIsFocused();
+  ]
+
+  const isFocused = useIsFocused()
 
   useEffect(() => {
-    isFocused && getExercicios();
-  }, [isFocused]);
+    isFocused && getExercicios()
+  }, [isFocused])
 
-  //Verificar leak de memória!
-  /*
-  useEffect(() => {
-    getExercicios();
-    return () => {
-      setState({}); 
-    };
-  }, [count]);
-  */
   getExercicios = async () => {
     try {
       const res = await axios.get(
         `http://volleyapi.sarapaiva.webtuga.net/exercise`,
-      );
-      setExercicios(res.data);
+      )
+      setExercicios(res.data)
     } catch (e) {
-      console.warn(e);
+      console.warn(e)
     }
-  };
+  }
 
   addExercise = () => {
-    navigation.navigate('AddExercise');
-  };
+    navigation.navigate('AddExercise')
+  }
   filterExercise = async (tipoGesto) => {
-    setGesto(tipoGesto);
+    setGesto(tipoGesto)
     if (tipoGesto == 'Todos') {
       try {
         const res = await axios.get(
           `http://volleyapi.sarapaiva.webtuga.net/exercise`,
-        );
-        setExercicios(res.data);
+        )
+        setExercicios(res.data)
       } catch (e) {
-        console.warn(e);
+        console.warn(e)
       }
     } else {
       try {
         const res = await axios.get(
           `http://volleyapi.sarapaiva.webtuga.net/exercise/${tipoGesto}`,
-        );
-        setExercicios(res.data);
+        )
+        setExercicios(res.data)
       } catch (e) {
-        console.warn(e);
+        console.warn(e)
       }
     }
-  };
+  }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View>
-        <Text
-          style={{
-            fontSize: 40,
-            marginTop: 20,
-            marginLeft: 15,
-            marginBottom: 15,
-          }}>
+    <SafeAreaView>
+      <View style={{flexDirection: 'column', height: '100%'}}>
+        <IconBar nav={navigation} />
+        <Text style={[globalStyles.title, {marginBottom: 10}]}>
           Lista de Exercicíos
         </Text>
-        {Platform.OS === 'ios' && (
-          <DropdownList
-            title="Gesto Técnico"
-            items={gestos}
-            onChange={(item) => filterExercise(item)}
-          />
-        )}
-        {Platform.OS === 'android' && (
-          <>
-            <Text style={[styles.text, {marginLeft: 15}]}>Gesto:</Text>
-            <Picker
-              selectedValue={gesto}
-              style={{height: 50, width: 150}}
-              onValueChange={(itemValue, itemIndex) =>
-                filterExercise(itemValue)
-              }>
-              <Picker.Item label="Todos" value="Todos" />
-              <Picker.Item label="Passe" value="Passe" />
-              <Picker.Item label="Remate" value="Remate" />
-              <Picker.Item label="Serviço" value="Serviço" />
-              <Picker.Item label="Bloco" value="Bloco" />
-            </Picker>
-          </>
-        )}
-        <View style={styles.lista}>
-          <FlatList
-            data={exercicios}
-            keyExtractor={(item) => `${item.idExercicio}`}
-            renderItem={({item}) => (
-              <TouchableOpacity
-                onPress={() => navigation.navigate('InfoExercicio', {item})}>
-                <Exercice {...item} />
-              </TouchableOpacity>
-            )}
-          />
-        </View>
+        <View style={globalStyles.content}>
+          {Platform.OS === 'ios' && (
+            <DropdownList
+              title="Gesto Técnico"
+              items={gestos}
+              onChange={(item) => filterExercise(item)}
+            />
+          )}
+          {Platform.OS === 'android' && (
+            <>
+              <Text style={globalStyles.form.label}>Gesto:</Text>
 
-        <View style={styles.fim}>
-          <TouchableOpacity onPress={addExercise}>
-            <View style={styles.button}>
-              <Text style={styles.texto}>Adicionar Exercicio</Text>
-              <Icon name="volleyball-ball"></Icon>
-            </View>
-          </TouchableOpacity>
-          
+              <View style={globalStyles.form.pickerArea}>
+                <Picker
+                  selectedValue={gesto}
+                  style={globalStyles.form.pickerInput}
+                  onValueChange={(itemValue, itemIndex) =>
+                    filterExercise(itemValue)
+                  }>
+                  <Picker.Item label="Todos" value="Todos" />
+                  <Picker.Item label="Passe" value="Passe" />
+                  <Picker.Item label="Remate" value="Remate" />
+                  <Picker.Item label="Serviço" value="Serviço" />
+                  <Picker.Item label="Bloco" value="Bloco" />
+                </Picker>
+              </View>
+            </>
+          )}
         </View>
+        <FlatList
+          style={{marginTop: 10}}
+          data={exercicios}
+          keyExtractor={(item) => `${item.idExercicio}`}
+          renderItem={({item}) => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('InfoExercicio', {item})}>
+              <Exercice {...item} />
+            </TouchableOpacity>
+          )}
+        />
+
+        <TouchableOpacity style={{marginBottom: 10}} onPress={addExercise}>
+          <View style={globalStyles.form.buttonSelect}>
+            <Text style={globalStyles.form.buttonSelectText2}>
+              Adicionar Exercicio
+            </Text>
+            <Icon style={globalStyles.form.icon2} name="volleyball-ball"></Icon>
+          </View>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
-  );
-};
-
-const styles = StyleSheet.create({
-  button: {
-    backgroundColor: '#da581e',
-    marginTop: 10,
-    padding: 10,
-
-    borderRadius: 7,
-    //width: '50%',
-    alignSelf: 'center',
-    alignItems: 'center',
-  },
-  fim: {
-    position: 'relative',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  lista: {
-    //flex: 2,
-    height: Dimensions.get('window').height * 0.5,
-    marginBottom: 10,
-  },
-
-  background: {
-    flex: 1,
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  container: {
-    backgroundColor: '#d8dce3',
-    height: '100%',
-  },
-});
+  )
+}

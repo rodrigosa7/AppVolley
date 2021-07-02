@@ -1,6 +1,7 @@
 import {
   Button,
   SafeAreaView,
+  ScrollView,
   SectionList,
   StyleSheet,
   Text,
@@ -12,6 +13,7 @@ import React, {useEffect, useState} from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import SelectMultiple from 'react-native-select-multiple'
 import axios from 'axios'
+import globalStyles from '../../styles'
 import moment from 'moment'
 import {server} from '../../common'
 import {useIsFocused} from '@react-navigation/native'
@@ -102,68 +104,84 @@ export default ({props, route}) => {
 
   return (
     <SafeAreaView>
-      <Text>Lista de Critérios</Text>
-
-      <Text>Passe</Text>
-      {criterioPasse && (
-        <SelectMultiple
-          items={criterioPasse.map((item) => ({
-            label: item.descricao,
-            value: item.idCriterio,
-          }))}
-          selectedItems={criterioPasseSelecionado}
-          onSelectionsChange={(selectedItems) =>
-            setCriterioPasseSelecionado(selectedItems)
-          }
-        />
-      )}
-      <Text>Remate</Text>
-      {criterioRemate && (
-        <SelectMultiple
-          items={criterioRemate.map((item) => ({
-            label: item.descricao,
-            value: item.idCriterio,
-          }))}
-          selectedItems={criterioRemateSelecionado}
-          onSelectionsChange={(selectedItems) =>
-            setCriterioRemateSelecionado(selectedItems)
-          }
-        />
-      )}
-      <Text>Bloco</Text>
-      {criterioBloco && (
-        <SelectMultiple
-          items={criterioBloco.map((item) => ({
-            label: item.descricao,
-            value: item.idCriterio,
-          }))}
-          selectedItems={criterioBlocoSelecionado}
-          onSelectionsChange={(selectedItems) =>
-            setCriterioBlocoSelecionado(selectedItems)
-          }
-        />
-      )}
-      <Text>Serviço</Text>
-      {criterioServico && (
-        <SelectMultiple
-          items={criterioServico.map((item) => ({
-            label: item.descricao,
-            value: item.idCriterio,
-          }))}
-          selectedItems={criterioServicoSelecionado}
-          onSelectionsChange={(selectedItems) =>
-            setCriterioServicoSelecionado(selectedItems)
-          }
-        />
-      )}
-      <View style={styles.fim}>
-        <TouchableOpacity style={styles.botoes} onPress={onAdd}>
-          <View style={styles.button}>
-            <Text style={styles.texto}>Adicionar</Text>
-            <Icon style={styles.icone} name="check"></Icon>
+      <ScrollView>
+        <Text style={globalStyles.title}>Lista de Critérios</Text>
+        <View style={globalStyles.content}>
+          <View style={globalStyles.form.group}>
+            <Text style={[globalStyles.form.label, {marginBottom: 10}]}>
+              Passe
+            </Text>
+            {criterioPasse && (
+              <SelectMultiple
+                items={criterioPasse.map((item) => ({
+                  label: item.descricao,
+                  value: item.idCriterio,
+                }))}
+                selectedItems={criterioPasseSelecionado}
+                onSelectionsChange={(selectedItems) =>
+                  setCriterioPasseSelecionado(selectedItems)
+                }
+              />
+            )}
           </View>
-        </TouchableOpacity>
-      </View>
+          <View style={globalStyles.form.group}>
+            <Text style={[globalStyles.form.label, {marginBottom: 10}]}>
+              Remate
+            </Text>
+            {criterioRemate && (
+              <SelectMultiple
+                items={criterioRemate.map((item) => ({
+                  label: item.descricao,
+                  value: item.idCriterio,
+                }))}
+                selectedItems={criterioRemateSelecionado}
+                onSelectionsChange={(selectedItems) =>
+                  setCriterioRemateSelecionado(selectedItems)
+                }
+              />
+            )}
+          </View>
+          <View style={globalStyles.form.group}>
+            <Text style={[globalStyles.form.label, {marginBottom: 10}]}>
+              Bloco
+            </Text>
+            {criterioBloco && (
+              <SelectMultiple
+                items={criterioBloco.map((item) => ({
+                  label: item.descricao,
+                  value: item.idCriterio,
+                }))}
+                selectedItems={criterioBlocoSelecionado}
+                onSelectionsChange={(selectedItems) =>
+                  setCriterioBlocoSelecionado(selectedItems)
+                }
+              />
+            )}
+          </View>
+          <View style={globalStyles.form.group}>
+            <Text style={[globalStyles.form.label, {marginBottom: 10}]}>
+              Serviço
+            </Text>
+            {criterioServico && (
+              <SelectMultiple
+                items={criterioServico.map((item) => ({
+                  label: item.descricao,
+                  value: item.idCriterio,
+                }))}
+                selectedItems={criterioServicoSelecionado}
+                onSelectionsChange={(selectedItems) =>
+                  setCriterioServicoSelecionado(selectedItems)
+                }
+              />
+            )}
+          </View>
+
+          <TouchableOpacity style={globalStyles.form.button} onPress={onAdd}>
+            <Text style={globalStyles.form.buttonText}>Adicionar</Text>
+            <Icon style={globalStyles.form.formIcon} name="check"></Icon>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   )
 }

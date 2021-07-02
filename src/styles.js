@@ -15,7 +15,7 @@ export default {
     elevation: 2,
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     color: '#d66029',
     margin: 10,
     marginLeft: 15,
@@ -25,6 +25,10 @@ export default {
     icon: {
       marginLeft: 10,
       color: 'white',
+    },
+    icon2: {
+      marginLeft: 10,
+      color: 'black',
     },
     buttonSelect: {
       backgroundColor: '#d66029',
@@ -39,6 +43,10 @@ export default {
     },
     buttonSelectText: {
       color: 'white',
+    },
+    buttonSelectText2: {
+      color: 'black',
+      fontWeight: 'bold',
     },
     button: {
       flexDirection: 'row',
@@ -62,6 +70,10 @@ export default {
       color: 'white',
       alignSelf: 'center',
     },
+    buttonText2: {
+      color: 'black',
+      alignSelf: 'center',
+    },
     formIcon: {
       marginLeft: 10,
       color: 'white',
@@ -75,7 +87,9 @@ export default {
       marginTop: 10,
     },
     label: {
+      color: 'black',
       fontWeight: 'bold',
+      fontSize: 15,
     },
     group: {
       flexDirection: 'column',
@@ -94,5 +108,10 @@ export default {
       backgroundColor: 'white',
       marginTop: 10,
     },
+  },
+  list: {
+    flex: 2,
+    width: '100%',
+    marginBottom: 10,
   },
 }

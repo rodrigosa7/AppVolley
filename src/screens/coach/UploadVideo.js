@@ -14,7 +14,7 @@ import ImagePicker from 'react-native-image-crop-picker'
 import {Picker} from '@react-native-picker/picker'
 import Video from 'react-native-video'
 import axios from 'axios'
-import {useIsFocused} from '@react-navigation/native'
+import globalStyles from '../../styles'
 
 const GESTOS = [
   {label: 'Passe', value: 'Passe'},
@@ -110,77 +110,85 @@ export default ({route, navigation}, props) => {
   return (
     <SafeAreaView>
       <ScrollView>
-        <Text style={styles.title}>Upload Vídeo</Text>
-        {Platform.OS === 'ios' && (
-          <DropdownList
-            title="Gesto Técnico"
-            items={GESTOS}
-            onChange={(item) => {
-              console.log(item)
-              filterExercise(item)
-            }}
-          />
-        )}
-        {Platform.OS === 'android' && (
-          <>
-            <Text style={[styles.text, {marginLeft: 15}]}>Gesto:</Text>
-            <Picker
-              selectedValue={gesto}
-              style={{height: 50, width: 150}}
-              onValueChange={(itemValue, itemIndex) =>
-                filterExercise(itemValue)
-              }>
-              <Picker.Item label="Passe" value="Passe" />
-              <Picker.Item label="Remate" value="Remate" />
-              <Picker.Item label="Serviço" value="Serviço" />
-              <Picker.Item label="Bloco" value="Bloco" />
-            </Picker>
-          </>
-        )}
-        {Platform.OS === 'android' && (
-          <>
-            <Text style={[styles.text, {marginLeft: 15}]}>Exercicio:</Text>
-            <Picker
-              selectedValue={exercicio}
-              style={{height: 50, width: 150}}
-              onValueChange={(itemValue, itemIndex) => setExercicio(itemValue)}>
-              {exercicios.map((item) => (
-                <Picker.Item
-                  key={item.idExercicio}
-                  label={item.exnome}
-                  value={item.idExercicio}
-                />
-              ))}
-            </Picker>
-          </>
-        )}
-        {video && video.path && (
-          <Video
-            source={{
-              uri: video.path,
-            }} // Can be a URL or a local file.
-            ref={(ref) => {
-              setPlayer(ref)
-            }} // Store reference
-            onBuffer={(frame) => console.log(frame)} // Callback when remote video is buffering
-            onError={(err) => console.log(err)} // Callback when video cannot be loaded
-            style={styles.video}
-          />
-        )}
-        <View style={styles.fim}>
-          <TouchableOpacity onPress={escolherFoto}>
-            <View style={styles.buttonImage}>
-              <Text style={styles.texto}>Escolher Video</Text>
-              <Icon style={styles.icone} name="video"></Icon>
+        <Text style={globalStyles.title}>Upload Vídeo</Text>
+        <View style={globalStyles.content}>
+          {Platform.OS === 'ios' && (
+            <DropdownList
+              title="Gesto Técnico"
+              items={GESTOS}
+              onChange={(item) => {
+                console.log(item)
+                filterExercise(item)
+              }}
+            />
+          )}
+          {Platform.OS === 'android' && (
+            <View style={globalStyles.form.group}>
+              <Text style={globalStyles.form.label}>Gesto:</Text>
+              <View style={globalStyles.form.pickerArea}>
+                <Picker
+                  selectedValue={gesto}
+                  style={globalStyles.form.pickerInput}
+                  onValueChange={(itemValue, itemIndex) =>
+                    filterExercise(itemValue)
+                  }>
+                  <Picker.Item label="Passe" value="Passe" />
+                  <Picker.Item label="Remate" value="Remate" />
+                  <Picker.Item label="Serviço" value="Serviço" />
+                  <Picker.Item label="Bloco" value="Bloco" />
+                </Picker>
+              </View>
             </View>
+          )}
+          {Platform.OS === 'android' && (
+            <View style={globalStyles.form.group}>
+              <Text style={globalStyles.form.label}>Exercicio:</Text>
+              <View style={globalStyles.form.pickerArea}>
+                <Picker
+                  selectedValue={exercicio}
+                  style={globalStyles.form.pickerInput}
+                  onValueChange={(itemValue, itemIndex) =>
+                    setExercicio(itemValue)
+                  }>
+                  {exercicios.map((item) => (
+                    <Picker.Item
+                      key={item.idExercicio}
+                      label={item.exnome}
+                      value={item.idExercicio}
+                    />
+                  ))}
+                </Picker>
+              </View>
+            </View>
+          )}
+          {video && video.path && (
+            <Video
+              source={{
+                uri: video.path,
+              }} // Can be a URL or a local file.
+              ref={(ref) => {
+                setPlayer(ref)
+              }} // Store reference
+              onBuffer={(frame) => console.log(frame)} // Callback when remote video is buffering
+              onError={(err) => console.log(err)} // Callback when video cannot be loaded
+              style={styles.video}
+            />
+          )}
+
+          <TouchableOpacity
+            onPress={escolherFoto}
+            style={globalStyles.form.buttonSelect}>
+            <Text style={globalStyles.form.buttonSelectText2}>
+              Escolher Video
+            </Text>
+            <Icon style={globalStyles.form.icon2} name="video"></Icon>
           </TouchableOpacity>
-        </View>
-        <View style={styles.fim}>
-          <TouchableOpacity style={styles.botoes} onPress={uploadVideo}>
-            <View style={styles.button}>
-              <Text style={styles.texto}>Adicionar</Text>
-              <Icon style={styles.icone} name="check"></Icon>
-            </View>
+
+          <TouchableOpacity
+            style={globalStyles.form.button}
+            onPress={uploadVideo}>
+            <Text style={globalStyles.form.buttonSelectText}>Adicionar</Text>
+            <Icon style={globalStyles.form.formIcon} name="check"></Icon>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -189,41 +197,6 @@ export default ({route, navigation}, props) => {
 }
 
 const styles = StyleSheet.create({
-  text: {
-    color: '#333',
-    fontSize: 18,
-  },
-  title: {
-    fontSize: 24,
-    color: '#da581e',
-    margin: 10,
-    fontWeight: 'bold',
-  },
-
-  icone: {
-    marginLeft: 10,
-  },
-  buttonImage: {
-    backgroundColor: '#da581e',
-    marginTop: 10,
-    padding: 10,
-    flexDirection: 'row',
-    borderRadius: 7,
-    alignSelf: 'center',
-    alignItems: 'center',
-  },
-  button: {
-    backgroundColor: '#080',
-    marginTop: 10,
-    padding: 10,
-    flexDirection: 'row',
-    width: '40%',
-    borderRadius: 7,
-    alignSelf: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 10,
-  },
   video: {
     display: 'flex',
     alignSelf: 'center',

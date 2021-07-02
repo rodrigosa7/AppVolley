@@ -1,6 +1,7 @@
 import 'moment/locale/pt'
 
 import {
+  Alert,
   Button,
   SafeAreaView,
   ScrollView,
@@ -15,13 +16,14 @@ import React, {useEffect, useState} from 'react'
 import DatePicker from 'react-native-date-picker'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import Icon from 'react-native-vector-icons/FontAwesome5'
+import IconBar from '../../components/IconBar'
 import {Picker} from '@react-native-picker/picker'
 import axios from 'axios'
 import globalStyles from '../../styles'
 import moment from 'moment'
 import {server} from '../../common'
 
-export default (props) => {
+export default ({props, route, navigation}) => {
   const [turmas, setTurmas] = useState([])
 
   const [evento, setEvento] = useState('')
@@ -117,14 +119,36 @@ export default (props) => {
       .unix()
 
     console.log(formattedDate, formattedStartTime)
-
-    const req = await axios.post(`${server}/createEvent`, {
-      ev_inicio: unixStartTime,
-      ev_fim: unixEndTime,
-      idteam: turma,
-      local: local,
-      tipo: evento,
-    })
+    if (!evento || !turma || !local) {
+      Alert.alert('Erro', 'Existem campos em branco', [
+        {
+          text: 'Confirmar',
+          style: 'cancel',
+        },
+      ])
+    } else if (unixStartTime >= unixEndTime) {
+      Alert.alert('Erro', 'A hora de inicio é superior à hora de fim', [
+        {
+          text: 'Confirmar',
+          style: 'cancel',
+        },
+      ])
+    } else {
+      const req = await axios
+        .post(`${server}/createEvent`, {
+          ev_inicio: unixStartTime,
+          ev_fim: unixEndTime,
+          idteam: turma,
+          local: local,
+          tipo: evento,
+        })
+        .then(() => {
+          navigation.goBack()
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
   }
 
   const formatDate = (date) => {
@@ -138,9 +162,8 @@ export default (props) => {
   return (
     <SafeAreaView>
       <ScrollView>
-        <View style={globalStyles.header}>
-          <Text style={globalStyles.title}>Criar um evento</Text>
-        </View>
+        <IconBar nav={navigation} />
+        <Text style={globalStyles.title}>Criar um evento</Text>
 
         <View style={globalStyles.content}>
           <View style={globalStyles.form.group}>

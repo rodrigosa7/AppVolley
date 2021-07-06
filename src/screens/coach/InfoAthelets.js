@@ -50,12 +50,7 @@ export default ({route, navigation}) => {
             <FlatList
               data={avaliacao}
               keyExtractor={(item) => `${item.idAthlete_Evaluation}`}
-              renderItem={({item}) => (
-                <TouchableOpacity
-                  onPress={() => navigation.navigate('InfoExercicio', {item})}>
-                  <Avaliacao {...item} />
-                </TouchableOpacity>
-              )}
+              renderItem={({item}) => <Avaliacao {...item} />}
             />
           )}
           <View>

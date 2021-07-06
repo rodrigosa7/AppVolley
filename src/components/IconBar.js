@@ -18,7 +18,6 @@ export default ({nav}) => {
 
 const localStyles = {
   container: {
-    width: '100%',
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center',

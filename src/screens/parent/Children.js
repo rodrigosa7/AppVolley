@@ -10,7 +10,9 @@ import React, {useEffect, useState} from 'react'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Atleta from '../../components/Atleta'
+import IconBar from '../../components/IconBar'
 import axios from 'axios'
+import globalStyles from '../../styles'
 
 export default ({navigation}) => {
   const [filhos, setFilhos] = useState([])
@@ -35,8 +37,9 @@ export default ({navigation}) => {
 
   return (
     <SafeAreaView>
-      <Text style={styles.title}>Educandos</Text>
-      <View style={styles.lista}>
+      <IconBar nav={navigation} />
+      <Text style={globalStyles.title}>Educandos</Text>
+      <View globalStyles={globalStyles.content}>
         <FlatList
           data={filhos}
           keyExtractor={(item) => `${item.idAthlete}`}

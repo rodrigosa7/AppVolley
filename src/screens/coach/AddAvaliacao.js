@@ -18,7 +18,7 @@ import moment from 'moment'
 import {server} from '../../common'
 import {useIsFocused} from '@react-navigation/native'
 
-export default ({props, route}) => {
+export default ({navigation, props, route}) => {
   const [criterioPasse, setCriterioPasse] = useState([])
   const [criterioRemate, setCriterioRemate] = useState([])
   const [criterioBloco, setCriterioBloco] = useState([])
@@ -91,12 +91,16 @@ export default ({props, route}) => {
         score: scoreBloco,
       })
 
-      await axios.post(`${server}/addEvaluation`, {
-        idAtleta: route.params.id,
-        score:
-          ((passeScore + servicoScore + remateScore + scoreBloco) / 4) * 20,
-        data: moment().unix(),
-      })
+      await axios
+        .post(`${server}/addEvaluation`, {
+          idAtleta: route.params.id,
+          score:
+            ((passeScore + servicoScore + remateScore + scoreBloco) / 4) * 20,
+          data: moment().unix(),
+        })
+        .then(() => {
+          navigation.goBack()
+        })
     } catch (err) {
       console.warn(err)
     }

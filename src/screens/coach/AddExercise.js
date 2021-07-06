@@ -22,7 +22,7 @@ import globalStyles from '../../styles'
 export default ({props, route, navigation}) => {
   const [descricao, setDescricao] = useState('')
   const [nome, setNome] = useState('')
-  const [gesto, setGesto] = useState('')
+  const [gesto, setGesto] = useState('Escolher o Gesto')
   const [imagem, setImagem] = useState(null)
   const [imagemsend, setImagemSend] = useState(null)
 

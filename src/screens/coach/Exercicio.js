@@ -45,6 +45,7 @@ export default ({props, navigation}) => {
   }
   filterExercise = async (tipoGesto) => {
     setGesto(tipoGesto)
+
     if (tipoGesto == 'Todos') {
       try {
         const res = await axios.get(
